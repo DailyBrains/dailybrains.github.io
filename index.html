@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DailyBrain - Challenge Your Mind Every Single Day</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620034936116811"
+            crossorigin="anonymous"></script>
+
+    <style>
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-all duration-500">
+<!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-lg backdrop-blur-lg bg-opacity-90 dark:bg-opacity-90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <span id="icon-sparkles-logo" class="w-8 h-8 text-purple-600 dark:text-purple-400 mr-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-8 h-8"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                    </span>
+                <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                        DailyBrain
+                    </span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200 font-medium">Home</a>
+                <a href="about.html" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200 font-medium">About</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <!-- Mobile Menu Toggle -->
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-800">
+                    <span id="mobileMenuIcon" class="w-5 h-5 text-gray-700 dark:text-gray-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                        </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-900 shadow-lg">
+        <div class="px-4 pt-2 pb-4 space-y-2">
+            <a href="#" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">Home</a>
+            <a href="#" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">About</a>
+        </div>
+    </div>
+</nav>
+
+<section class="relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+        <div class="text-center">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                    <span class="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 dark:from-purple-400 dark:via-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                        Challenge Your Mind
+                    </span>
+                <br>
+                <span class="text-gray-900 dark:text-white">
+                        Every Single Day
+                    </span>
+            </h1>
+        </div>
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="absolute top-20 left-10 w-72 h-72 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-pulse"></div>
+    <div class="absolute bottom-20 right-10 w-72 h-72 bg-pink-300 dark:bg-pink-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl opacity-30 animate-pulse"></div>
+</section>
+
+<!-- Features Grid -->
+<section class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="text-center mb-12">
+        <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Daily Activities Await You
+        </h2>
+        <p class="text-lg text-gray-600 dark:text-gray-400">
+            Choose from a variety of brain-training activities
+        </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Daily Quiz -->
+        <a href="dailyquiz.html" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer block">
+            <div class="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 rounded-2xl transition-opacity duration-300"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-brain w-6 h-6 text-white"><path d="M12 5H6a2 2 0 0 0-2 2c0 2.2.7 4.3 2 6.1V19a2 2 0 0 0 2 2h4"/><path d="M12 5h6a2 2 0 0 1 2 2c0 2.2-.7 4.3-2 6.1V19a2 2 0 0 1-2 2h-4"/><path d="M12 5a4 4 0 0 0-2 8"/><path d="M12 5a4 4 0 0 1 2 8"/><path d="M15 13c2.8 0 5-2.2 5-5a4.95 4.95 0 0 0-1.4-3.5"/><path d="M9 13c-2.8 0-5-2.2-5-5a4.95 4.95 0 0 1 1.4-3.5"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    Daily Quiz
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Test your knowledge with our daily trivia challenges
+                </p>
+                <div class="flex items-center text-purple-600 dark:text-purple-400 font-medium">
+                    <span>Play Now</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform duration-200"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Daily Poll -->
+        <a href="dailypoll.html" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer block">
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-cyan-500 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 rounded-2xl transition-opacity duration-300"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bar-chart-3 w-6 h-6 text-white"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    Daily Poll
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Share your opinion and see what others think
+                </p>
+                <div class="flex items-center text-purple-600 dark:text-purple-400 font-medium">
+                    <span>Play Now</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform duration-200"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Daily Word Puzzle -->
+        <a href="dailywordpuzzle.html" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer block">
+            <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-emerald-500 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 rounded-2xl transition-opacity duration-300"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-gradient-to-r from-green-500 to-emerald-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-puzzle w-6 h-6 text-white"><path d="M19.4 15c.4 1.2 1 2.3 2 3.3a6.5 6.5 0 0 0-3.3-2c-.7-.4-1.4-.7-2-1V9c-.6-.3-1.3-.6-2-1H9.5c-1.3-.4-2.6-.6-4-.6a7.7 7.7 0 0 0-3.5 1.5c.3 1.2 1 2.3 2 3.3a6.5 6.5 0 0 0 3.3-2c.7-.4 1.4-.7 2-1V9c.6-.3 1.3-.6 2-1h2.5c1.3-.4 2.6-.6 4-.6a7.7 7.7 0 0 0 3.5 1.5Z"/><path d="M12.5 16.5c-1.2-.4-2.3-1-3.3-2a6.5 6.5 0 0 0 3.3 2c.7.4 1.4.7 2 1V21c.6.3 1.3.6 2 1h2.5c1.3.4 2.6.6 4 .6a7.7 7.7 0 0 0 3.5-1.5c-.3-1.2-1-2.3-2-3.3a6.5 6.5 0 0 0-3.3 2c-.7.4-1.4.7-2 1V21c-.6.3-1.3.6-2 1H12.5Z"/><path d="M12.5 7.5c1.2.4 2.3 1 3.3 2a6.5 6.5 0 0 0-3.3-2c-.7-.4-1.4-.7-2-1V3c-.6-.3-1.3-.6-2-1H9.5c-1.3-.4-2.6-.6-4-.6a7.7 7.7 0 0 0-3.5 1.5c.3 1.2 1 2.3 2 3.3a6.5 6.5 0 0 0 3.3-2c.7-.4 1.4-.7 2-1V3c.6-.3 1.3-.6 2-1h2.5Z"/><path d="M4.6 15c-.4-1.2-1-2.3-2-3.3a6.5 6.5 0 0 0 3.3 2c.7.4 1.4.7 2 1V21c.6.3 1.3.6 2 1h2.5c1.3.4 2.6.6 4 .6a7.7 7.7 0 0 0 3.5-1.5c-.3-1.2-1-2.3-2-3.3a6.5 6.5 0 0 0-3.3 2c-.7.4-1.4.7-2 1V21c-.6.3-1.3.6-2 1H7.5Z"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    Daily Word Puzzle
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Challenge yourself with wordle
+                </p>
+                <div class="flex items-center text-purple-600 dark:text-purple-400 font-medium">
+                    <span>Play Now</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform duration-200"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- On This Day -->
+        <a href="onthisday.html" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer block">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 rounded-2xl transition-opacity duration-300"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-calendar w-6 h-6 text-white"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    On This Day
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Discover important events and milestones that happened on this day in history
+                </p>
+                <div class="flex items-center text-purple-600 dark:text-purple-400 font-medium">
+                    <span>Explore</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform duration-200"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Mini Games -->
+        <a href="games.html" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer block">
+            <div class="absolute inset-0 bg-gradient-to-r from-red-500 to-rose-500 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 rounded-2xl transition-opacity duration-300"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-gradient-to-r from-red-500 to-rose-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-gamepad-2 w-6 h-6 text-white"><path d="M6 11v1a3 3 0 1 0 6 0v-1"/><path d="M12 11v1a3 3 0 1 0 6 0v-1"/><path d="M16.5 7.5h-9A4.5 4.5 0 0 0 3 12v3a4.5 4.5 0 0 0 4.5 4.5h9A4.5 4.5 0 0 0 21 15v-3a4.5 4.5 0 0 0-4.5-4.5Z"/><path d="M12 4V2"/><path d="M4 12H2"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    Mini Games
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Enjoy quick, fun games to pass the time
+                </p>
+                <div class="flex items-center text-purple-600 dark:text-purple-400 font-medium">
+                    <span>Play Now</span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform duration-200"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </a>
+
+        <!-- Daily Facts -->
+        <a href="dailyfacts.html" class="group relative bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer block">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500 to-purple-500 opacity-0 group-hover:opacity-10 dark:group-hover:opacity-20 rounded-2xl transition-opacity duration-300"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-book-open w-6 h-6 text-white"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    Daily Facts
+                </h3>
+                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                    Learn something new every single day
+                </p>
+                <div class="flex items-center text-purple-600 dark:text-purple-400 font-medium">
+                    <span>Play Now</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right w-4 h-4 ml-1 group-hover:translate-x-2 transition-transform duration-200"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- Info Section -->
+<section class="bg-gradient-to-r from-purple-600 to-pink-600 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">Made By:</div>
+                <div class="text-purple-100">Mattias</div>
+            </div>
+
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">2025</div>
+                <div class="text-purple-100">Launched</div>
+            </div>
+
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">💬</div>
+                <div class="text-purple-100">Join our Discord</div>
+            </div>
+
+            <div>
+                <div class="text-4xl font-bold text-white mb-2">🎮</div>
+                <div class="text-purple-100">Made for Fun</div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Bottom Section -->
+<section class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        Have Fun Challenging Yourself!
+    </h2>
+    <p class="text-lg text-gray-600 dark:text-gray-400 mb-8">
+        Join our community and start your brain training journey!
+    </p>
+    <a href="https://discord.gg/9XY62bv7AY" target="_blank" rel="noopener noreferrer"
+       class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300 inline-block text-center">
+        Join our Discord
+    </a>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-100 dark:bg-gray-900 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6 text-purple-600 dark:text-purple-400 mr-2"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+            </div>
+            <div class="flex space-x-6">
+                <a href="privacy.html" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                    Privacy
+                </a>
+                <a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
+                    Contact
+                </a>
+            </div>
+        </div>
+        <div class="mt-8 text-center text-gray-500 dark:text-gray-500">
+        </div>
+    </div>
+</footer>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIconContainer = document.getElementById('mobileMenuIcon');
+
+    const menuIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5 text-gray-700 dark:text-gray-300"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
+    const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x w-5 h-5 text-gray-700 dark:text-gray-300"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        if (mobileMenu.classList.contains('hidden')) {
+            mobileMenuIconContainer.innerHTML = menuIcon;
+        } else {
+            mobileMenuIconContainer.innerHTML = xIcon;
+        }
+    });
+</script>
+</body>
+</html>

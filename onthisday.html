@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On This Day - DailyBrain</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% auto;
+            animation: gradientBG 5s ease infinite;
+        }
+        .event-card {
+            transition: all 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        body {
+            background: linear-gradient(to bottom right, from-purple-50 to-purple-100) !important;
+            dark:background: linear-gradient(to bottom right, from-purple-900 to-purple-800) !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 transition-all duration-500">
+
+<!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white dark:bg-purple-900 shadow-lg backdrop-blur-lg bg-opacity-90 dark:bg-opacity-90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <span class="w-8 h-8 text-purple-600 dark:text-purple-400 mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-8 h-8"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                </span>
+                <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-400 dark:from-purple-400 dark:to-purple-600 bg-clip-text text-transparent">
+                    DailyBrain
+                </span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200 font-medium">Home</a>
+                <a href="about.html" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200 font-medium">About</a>
+            </div>
+
+            <!-- Right side buttons -->
+            <div class="flex items-center space-x-4">
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-purple-800">
+                    <span id="mobileMenuIcon" class="w-5 h-5 text-gray-700 dark:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-purple-900 shadow-lg">
+        <div class="px-4 pt-2 pb-4 space-y-2">
+            <a href="index.html" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-purple-800 rounded-lg transition-colors duration-200">Home</a>
+            <a href="about.html" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-purple-800 rounded-lg transition-colors duration-200">About</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="relative py-24 lg:py-32 overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full z-0 opacity-30">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-72 h-72 bg-purple-200 dark:bg-purple-800 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-pulse"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-purple-600 via-purple-400 to-purple-300 dark:from-purple-400 dark:via-purple-300 dark:to-purple-600 bg-clip-text text-transparent">
+                    On This Day
+                </span>
+                <br>
+                <span id="subtitle" class="text-gray-900 dark:text-white">Historical Highlights</span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+                Discover fascinating events, births, and deaths that happened on this day in history.
+            </p>
+            <div id="yesterday-events" class="mt-4 text-gray-600 dark:text-gray-300"></div>
+        </div>
+
+        <!-- Events Section -->
+        <div id="events-section" class="max-w-3xl mx-auto bg-white dark:bg-purple-900 rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden ring-2 ring-purple-500/30 dark:ring-purple-400/30 hidden">
+            <div class="absolute inset-0 opacity-10 dark:opacity-20 -z-10 animate-gradient bg-gradient-to-br from-purple-500 to-purple-300"></div>
+            <div id="events-list" class="space-y-6"></div>
+        </div>
+
+        <div id="completed-section" class="max-w-3xl mx-auto bg-white dark:bg-purple-900 rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden ring-2 ring-purple-500/30 dark:ring-purple-400/30 hidden">
+            <div class="absolute inset-0 opacity-10 dark:opacity-20 -z-10 animate-gradient bg-gradient-to-br from-purple-500 to-purple-300"></div>
+            <div id="completed-content" class="text-center py-8">
+            </div>
+        </div>
+
+        <!-- Home Button -->
+        <div class="mt-8 text-center">
+            <a href="index.html" class="inline-block px-6 py-3 bg-gray-200 dark:bg-purple-800 text-gray-800 dark:text-white rounded-full font-medium hover:bg-gray-300 dark:hover:bg-purple-700 transition-colors duration-300">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-100 dark:bg-purple-900 py-12 mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6 text-purple-600 dark:text-purple-400 mr-2"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                <span class="text-gray-600 dark:text-gray-400">© 2025 DailyBrain. All rights reserved.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="privacy.html" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Privacy</a>
+                <a href="contact.html" class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIconContainer = document.getElementById('mobileMenuIcon');
+    const menuIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-menu w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
+    const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuIconContainer.innerHTML = mobileMenu.classList.contains('hidden') ? menuIcon : xIcon;
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dailyEvents = {
+            "2025-08-27": [
+                { year: 1883, event: "Eruption of Krakatoa: Four enormous explosions almost destroy the island of Krakatoa and cause years of climate change." },
+                { year: 1962, event: "The Mariner 2 unmanned space mission is launched to Venus by NASA." },
+                { year: 1991, event: "Moldova declares independence from the USSR." }
+            ],
+            "2025-08-28": [
+                { year: 1830, event: "The Baltimore and Ohio Railroad's new Tom Thumb steam locomotive races a horse-drawn car, presaging steam's role in U.S. railroads." },
+                { year: 1963, event: "Martin Luther King Jr. gives his I Have a Dream speech." },
+                { year: 1996, event: "Charles, Prince of Wales and Diana, Princess of Wales divorce." }
+            ],
+            "2025-08-29": [
+                { year: 1758, event: "The Treaty of Easton is signed between the British colonial government and various Native American tribes." },
+                { year: 1885, event: "Gottlieb Daimler patents the world's first internal combustion motorcycle, the Reitwagen." },
+                { year: 2005, event: "Hurricane Katrina devastates much of the U.S. Gulf Coast." }
+            ],
+            "2025-08-30": [
+                { year: 1797, event: "Mary Shelley, English novelist and playwright is born." },
+                { year: 1918, event: "Fanny Kaplan shoots and seriously injures Bolshevik leader Vladimir Lenin, one of the first acts of political terrorism against the USSR." },
+                { year: 1984, event: "The Space Shuttle Discovery takes off on its maiden voyage." }
+            ],
+            "2025-08-31": [
+                { year: 1897, event: "Thomas Edison patents the Kinetoscope, the first movie projector." },
+                { year: 1997, event: "Diana, Princess of Wales dies in a car crash in Paris." },
+                { year: 2016, event: "Brazil's President Dilma Rousseff is impeached and removed from office." }
+            ],
+        };
+
+        const eventsSection = document.getElementById('events-section');
+        const completedSection = document.getElementById('completed-section');
+        const completedContent = document.getElementById('completed-content');
+        const subtitle = document.getElementById('subtitle');
+        const yesterdayEventsElement = document.getElementById('yesterday-events');
+        const eventsList = document.getElementById('events-list');
+
+        function getTodayDateString() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        const todayDateString = getTodayDateString();
+        const todayEvents = dailyEvents[todayDateString] || [];
+        const hasViewedToday = localStorage.getItem(`onThisDay_${todayDateString}`) !== null;
+
+        function getYesterdayDateString(todayDateStr) {
+            const [year, month, day] = todayDateStr.split('-').map(Number);
+            const today = new Date(year, month - 1, day);
+            today.setDate(today.getDate() - 1);
+            return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+        }
+
+        const yesterdayDateString = getYesterdayDateString(todayDateString);
+        const yesterdayEvents = dailyEvents[yesterdayDateString] || [];
+
+        function displayYesterdayEvents() {
+            if (yesterdayEvents.length > 0) {
+                yesterdayEventsElement.innerHTML = `
+                    <div class="bg-gray-50 dark:bg-purple-800 p-4 rounded-lg border border-gray-200 dark:border-purple-700">
+                        <h3 class="font-bold text-gray-800 dark:text-gray-200 mb-2">Yesterday's Highlight</h3>
+                        <p class="text-lg font-semibold text-purple-600 dark:text-purple-400">
+                            ${yesterdayEvents[0].year}: ${yesterdayEvents[0].event}
+                        </p>
+                    </div>`;
+            } else {
+                yesterdayEventsElement.innerHTML = `
+                    <div class="text-gray-500 dark:text-gray-400 italic">
+                        No events available from yesterday.
+                    </div>`;
+            }
+        }
+
+        displayYesterdayEvents();
+
+        if (todayEvents.length === 0) {
+            showCompletedMessage("No historical events available for today. Please check back later!");
+            return;
+        }
+
+        eventsSection.classList.remove('hidden');
+        todayEvents.forEach(event => {
+            const eventItem = document.createElement('div');
+            eventItem.className = 'event-card bg-gray-50 dark:bg-purple-800 p-6 rounded-xl shadow-md';
+            eventItem.innerHTML = `
+                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400 mb-2">${event.year}</div>
+                <p class="text-gray-700 dark:text-gray-300">${event.event}</p>
+            `;
+            eventsList.appendChild(eventItem);
+        });
+
+        localStorage.setItem(`onThisDay_${todayDateString}`, 'viewed');
+
+        function showCompletedMessage(message) {
+            subtitle.textContent = "All Done for Today!";
+            completedContent.innerHTML = `
+                <div class="w-24 h-24 mx-auto mb-6 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 text-purple-600 dark:text-purple-400">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Exploration Complete!</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">${message}</p>
+                <div class="flex justify-center gap-4">
+                    <a href="index.html" class="px-8 py-3 bg-gray-200 dark:bg-purple-800 text-gray-800 dark:text-white rounded-full font-medium hover:bg-gray-300 dark:hover:bg-purple-700 transition-colors duration-300">
+                        Back to Home
+                    </a>
+                </div>`;
+            completedSection.classList.remove('hidden');
+            eventsSection.classList.add('hidden');
+        }
+    });
+</script>
+
+</body>
+</html>

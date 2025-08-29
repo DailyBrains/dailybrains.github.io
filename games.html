@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mini Games - DailyBrain</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620034936116811"
+            crossorigin="anonymous"></script>
+
+    <style>
+        @keyframes gradientBG {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+          background-size: 200% auto;
+          animation: gradientBG 7s ease infinite;
+        }
+        .card { perspective: 1000px; }
+        .card-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+        .card.flip .card-inner { transform: rotateY(180deg); }
+        .card-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .card-back { transform: rotateY(180deg); }
+
+        .game-card { transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+        .game-card:hover { transform: translateY(-6px); box-shadow: 0 18px 40px rgba(15,10,30,.45); border-color: #9333ea !important; }
+
+        button:not([disabled]):hover { filter: brightness(1.1); }
+
+        .ms-tile { width: 40px; height: 40px; }
+        .ms-open { background-color: rgba(39,39,42,.8); }
+        .ms-flag { color: #f43f5e; }
+
+        .simon-pad { transition: transform .12s ease, filter .12s ease; }
+        .simon-pad.active { filter: brightness(1.5); transform: scale(1.02); }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-rose-950 via-zinc-950 to-black text-gray-100">
+
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-lg border-b border-rose-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+          <span class="w-8 h-8 text-rose-400 mr-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/>
+              <path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/>
+              <path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/>
+              <path d="M3.5 12.5c-.3 0 -.5.1 -.7.3 -.2.2 -.3.4 -.3.7s.1.5 .3.7c.2.2 .4.3 .7.3 .3 0 .5 -.1 .7 -.3 .2 -.2 .3 -.4 .3 -.7 s -.1 -.5 -.3 -.7 c -.2 -.2 -.4 -.3 -.7 -.3 Z"/>
+            </svg>
+          </span>
+                <span class="text-xl font-bold bg-gradient-to-r from-rose-400 to-pink-400 bg-clip-text text-transparent">DailyBrain</span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-300 hover:text-rose-400 transition font-medium">Home</a>
+                <a href="about.html" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-purple-800 rounded-lg transition-colors duration-200">About</a>
+            </div>
+            <button id="mobileMenuButton" class="md:hidden p-2 rounded-lg bg-zinc-900">
+          <span id="mobileMenuIcon" class="w-5 h-5 text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          </span>
+            </button>
+        </div>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-zinc-950 border-b border-rose-900/50">
+        <div class="px-4 pt-2 pb-4 space-y-2">
+            <a href="index.html" class="block px-3 py-2 text-gray-300 hover:bg-zinc-900 rounded-lg">Home</a>
+            <a href="about.html" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-purple-800 rounded-lg transition-colors duration-200">About</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+        <div class="text-center">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-4">
+                <span class="bg-gradient-to-r from-rose-400 via-pink-400 to-fuchsia-400 bg-clip-text text-transparent">Mini Games</span>
+                <br/>
+                <span class="text-gray-300">Quick, fun, and addictive</span>
+            </h1>
+            <p class="text-gray-400 max-w-2xl mx-auto">Pick a game below.</p>
+        </div>
+    </div>
+    <div class="pointer-events-none absolute inset-0 opacity-20 -z-10">
+        <div class="absolute -top-10 -left-10 w-96 h-96 bg-rose-800/40 rounded-full blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-0 right-0 w-[28rem] h-[28rem] bg-fuchsia-800/40 rounded-full blur-3xl animate-pulse"></div>
+    </div>
+</section>
+
+<!-- Game Picker -->
+<section class="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Reaction Test -->
+        <button data-game="reaction" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-rose-600/20 to-fuchsia-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-rose-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-rose-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M13 2H6a2 2 0 0 0-2 2v7"/><path d="M22 13h-7"/><path d="M3 3l7 7"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Reaction Test</h3>
+                <p class="text-gray-400 mt-1">Click when the screen turns green. Track your best time.</p>
+            </div>
+        </button>
+
+        <!-- Memory Match -->
+        <button data-game="memory" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-fuchsia-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-fuchsia-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-fuchsia-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Memory Match</h3>
+                <p class="text-gray-400 mt-1">Flip and find pairs. Beat your best time and moves.</p>
+            </div>
+        </button>
+
+        <!-- Number Guessing -->
+        <button data-game="number-guess" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-pink-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-pink-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-pink-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 6v-2a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v4"/><path d="M10 13a2 2 0 0 1 4 0v1a2 2 0 0 1-4 0V13z"/><path d="M12 21v-3a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Number Guess</h3>
+                <p class="text-gray-400 mt-1">Guess the number between 1 and 100.</p>
+            </div>
+        </button>
+
+        <!-- Rock Paper Scissors -->
+        <button data-game="rps" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-pink-600/20 to-fuchsia-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-pink-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-pink-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M2 12h12l-5 5-2-2-3 3z"/><path d="M12 22v-2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2h3"/><path d="m19 2-3 3 3 3 3-3"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Rock Paper Scissors</h3>
+                <p class="text-gray-400 mt-1">Best of five against the computer.</p>
+            </div>
+        </button>
+
+        <!-- Aim Trainer -->
+        <button data-game="aim" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-rose-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-rose-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-rose-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Aim Trainer</h3>
+                <p class="text-gray-400 mt-1">Hit as many targets as you can in 30s.</p>
+            </div>
+        </button>
+
+        <!-- Minesweeper -->
+        <button data-game="minesweeper" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-fuchsia-600/20 to-rose-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-fuchsia-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-fuchsia-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M7 7h10v10H7z"/><path d="M7 7l10 10M17 7 7 17"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Minesweeper</h3>
+                <p class="text-gray-400 mt-1">Flag bombs. Clear the field.</p>
+            </div>
+        </button>
+
+        <!-- Snake -->
+        <button data-game="snake" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-600/20 to-pink-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-purple-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M17 18a3 3 0 0 1-3 3H9a6 6 0 0 1 0-12h6a3 3 0 0 0 0-6H9"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Snake</h3>
+                <p class="text-gray-400 mt-1">Eat food. Don’t hit yourself.</p>
+            </div>
+        </button>
+
+        <!-- Simon Says -->
+        <button data-game="simon" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-rose-600/20 to-fuchsia-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-rose-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-rose-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><circle cx="8" cy="16" r="3"/><circle cx="16" cy="16" r="3"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Simon Says</h3>
+                <p class="text-gray-400 mt-1">Repeat the sequence. Level up.</p>
+            </div>
+        </button>
+
+        <!-- Word Scramble -->
+        <button data-game="scramble" class="game-card group relative bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6 text-left">
+            <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-pink-600/20 to-purple-600/20 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="inline-flex p-3 rounded-lg bg-pink-700/40 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-pink-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="m16 6 6 6-6 6"/><path d="M8 6 2 12l6 6"/></svg>
+                </div>
+                <h3 class="text-xl font-semibold text-white">Word Scramble</h3>
+                <p class="text-gray-400 mt-1">Unscramble words. Beat your time.</p>
+            </div>
+        </button>
+
+    </div>
+</section>
+
+<!-- Game Containers -->
+<section class="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto mt-10 space-y-10">
+
+    <!-- Toolbar -->
+    <div class="flex items-center justify-between">
+        <div class="text-sm text-gray-400" id="game-instructions">Choose a game above to begin</div>
+        <div class="flex gap-3">
+            <a href="index.html" class="px-4 py-2 rounded-full bg-zinc-800 hover:bg-zinc-700 border border-rose-900/40 text-gray-200 transition">Back to Home</a>
+            <button id="backToPicker" class="hidden px-4 py-2 rounded-full bg-rose-800 hover:bg-rose-700 border border-rose-900/60 text-white transition">Back to Games</button>
+        </div>
+    </div>
+
+    <!-- Reaction Test -->
+    <div id="game-reaction" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2 text-white">Reaction Test</h2>
+                <p class="text-gray-400 mb-4">Wait for the panel to turn green, then click as fast as you can.</p>
+                <div id="rt-area" class="select-none rounded-xl h-64 flex items-center justify-center text-xl font-semibold border border-zinc-700 bg-rose-900/70 text-rose-200 cursor-pointer transition-colors">Click Start to begin</div>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button id="rt-start" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition">Start</button>
+                    <button id="rt-try-again" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition" disabled>Try Again</button>
+                    <button id="rt-reset" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition">Reset Stats</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Attempt</span><span id="rt-attempt">0/5</span></div>
+                    <div class="flex justify-between"><span>Last time</span><span id="rt-last">–</span></div>
+                    <div class="flex justify-between"><span>Average</span><span id="rt-avg">–</span></div>
+                    <div class="flex justify-between"><span>Best (local)</span><span id="rt-best">–</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memory Match -->
+    <div id="game-memory" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2 text-white">Memory Match</h2>
+                <p class="text-gray-400 mb-4">Flip cards to find matching pairs. Try to use as few moves as possible.</p>
+                <div id="mem-grid" class="grid grid-cols-4 gap-3 max-w-md"></div>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button id="mem-restart" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition">Restart</button>
+                    <button id="mem-reset" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition">Reset Best</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Moves</span><span id="mem-moves">0</span></div>
+                    <div class="flex justify-between"><span>Time</span><span id="mem-time">0.0s</span></div>
+                    <div class="flex justify-between"><span>Best Moves</span><span id="mem-best-moves">–</span></div>
+                    <div class="flex justify-between"><span>Best Time</span><span id="mem-best-time">–</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Number Guess -->
+    <div id="game-number-guess" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2 text-white">Number Guessing Game</h2>
+                <p class="text-gray-400 mb-4">Guess the number between 1 and 100. You have 10 attempts.</p>
+                <div class="flex flex-col sm:flex-row gap-3 mb-4">
+                    <input type="number" id="ng-guess-input" placeholder="Enter your guess" class="flex-1 px-4 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-rose-600">
+                    <button id="ng-submit-guess" class="px-5 py-2 rounded-lg bg-rose-700 text-white transition">Guess</button>
+                </div>
+                <div id="ng-feedback" class="mb-4 text-lg font-medium min-h-[1.5rem]"></div>
+                <div class="text-sm text-gray-400">Attempts left: <span id="ng-attempts-left">10</span></div>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button id="ng-play-again" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition" disabled>Play Again</button>
+                    <button id="ng-reset-stats" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition">Reset Stats</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Last Guess</span><span id="ng-last-guess">–</span></div>
+                    <div class="flex justify-between"><span>Best Attempts</span><span id="ng-best-attempts">–</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rock Paper Scissors -->
+    <div id="game-rps" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2 text-white">Rock Paper Scissors</h2>
+                <p class="text-gray-400 mb-4">Play against the computer. Best of 5.</p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-6 mb-6">
+                    <div class="flex flex-col items-center">
+                        <span class="text-lg mb-2 text-purple-300">You</span>
+                        <button data-choice="rock" class="rps-choice px-6 py-3 mb-2 rounded-lg bg-rose-700 text-white">✊ Rock</button>
+                        <button data-choice="paper" class="rps-choice px-6 py-3 mb-2 rounded-lg bg-rose-700 text-white">✋ Paper</button>
+                        <button data-choice="scissors" class="rps-choice px-6 py-3 rounded-lg bg-rose-700 text-white">✌️ Scissors</button>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span class="text-lg mb-2 text-purple-300">Computer</span>
+                        <span id="rps-computer-choice" class="text-3xl mb-3">?</span>
+                    </div>
+                </div>
+                <div id="rps-result" class="text-center text-2xl font-bold mb-4 min-h-[2rem]"></div>
+                <div class="text-center text-sm text-gray-400 mb-4">Score: You <span id="rps-player-score">0</span> - <span id="rps-computer-score">0</span> Computer (Best Streak: <span id="rps-best-streak">0</span>)</div>
+                <div class="mt-4 flex flex-wrap gap-3 justify-center">
+                    <button id="rps-play-again" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition" disabled>Play Next Round</button>
+                    <button id="rps-reset-game" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition">Reset Game</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aim Trainer -->
+    <div id="game-aim" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2 text-white">Aim Trainer</h2>
+                <p class="text-gray-400 mb-4">Hit the target as many times as possible in 30 seconds. Clicks outside count as misses.</p>
+                <div id="aim-area" class="relative rounded-xl border border-zinc-700 bg-zinc-900 h-80 overflow-hidden select-none"></div>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button id="aim-start" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition">Start</button>
+                    <button id="aim-reset" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition">Reset Best</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Time Left</span><span id="aim-time">30s</span></div>
+                    <div class="flex justify-between"><span>Hits</span><span id="aim-hits">0</span></div>
+                    <div class="flex justify-between"><span>Clicks</span><span id="aim-shots">0</span></div>
+                    <div class="flex justify-between"><span>Accuracy</span><span id="aim-acc">0%</span></div>
+                    <div class="flex justify-between"><span>Best Hits</span><span id="aim-best">–</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Minesweeper -->
+    <div id="game-minesweeper" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 text-white">Minesweeper (9x9 • 10 bombs)</h2>
+                <p class="text-gray-400 mb-4">Left-click to reveal, right-click to flag. First click is safe.</p>
+                <div id="ms-grid" class="grid grid-cols-9 gap-1 select-none"></div>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button id="ms-restart" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition">Restart</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Bombs Left</span><span id="ms-bombs-left">10</span></div>
+                    <div class="flex justify-between"><span>Time</span><span id="ms-time">0s</span></div>
+                    <div class="flex justify-between"><span>Wins</span><span id="ms-wins">0</span></div>
+                    <div class="flex justify-between"><span>Best Time</span><span id="ms-best">–</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Snake -->
+    <div id="game-snake" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 text-white">Snake</h2>
+                <p class="text-gray-400 mb-4">Use arrow keys or WASD. Start/Pause anytime.</p>
+                <canvas id="snake-canvas" width="400" height="400" class="rounded-lg border border-zinc-700 bg-zinc-900"></canvas>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button id="snake-start" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition">Start / Pause</button>
+                    <button id="snake-restart" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition">Restart</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Score</span><span id="snake-score">0</span></div>
+                    <div class="flex justify-between"><span>Best Score</span><span id="snake-best">–</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simon Says -->
+    <div id="game-simon" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 text-white">Simon Says</h2>
+                <p class="text-gray-400 mb-4">Watch the pads light up and repeat the sequence.</p>
+                <div class="grid grid-cols-2 gap-4 max-w-sm">
+                    <button data-color="rose" class="simon-pad rounded-xl h-28 bg-rose-700/70 border border-rose-600"></button>
+                    <button data-color="fuchsia" class="simon-pad rounded-xl h-28 bg-fuchsia-700/70 border border-fuchsia-600"></button>
+                    <button data-color="violet" class="simon-pad rounded-xl h-28 bg-violet-700/70 border border-violet-600"></button>
+                    <button data-color="pink" class="simon-pad rounded-xl h-28 bg-pink-700/70 border border-pink-600"></button>
+                </div>
+                <div class="mt-4 flex flex-wrap gap-3">
+                    <button id="simon-start" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition">Start</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Level</span><span id="simon-level">0</span></div>
+                    <div class="flex justify-between"><span>Best Level</span><span id="simon-best">–</span></div>
+                    <div id="simon-status" class="text-sm text-gray-400 mt-2 min-h-[1.25rem]"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Word Scramble -->
+    <div id="game-scramble" class="hidden bg-zinc-900/60 border border-rose-900/50 rounded-2xl p-6">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-2 text-white">Word Scramble</h2>
+                <p class="text-gray-400 mb-4">Unscramble the word. Solve 5 words as fast as you can.</p>
+                <div class="text-3xl font-extrabold tracking-wider text-center bg-zinc-900 border border-zinc-700 rounded-xl py-6 mb-4" id="scramble-word">– – – –</div>
+                <div class="flex flex-col sm:flex-row gap-3 mb-4">
+                    <input id="scramble-input" type="text" placeholder="Your answer" class="flex-1 px-4 py-2 rounded-lg bg-zinc-800 border border-zinc-700 text-white focus:outline-none focus:ring-2 focus:ring-rose-600">
+                    <button id="scramble-submit" class="px-5 py-2 rounded-lg bg-rose-700 text-white transition">Submit</button>
+                </div>
+                <div id="scramble-feedback" class="mb-4 text-lg font-medium min-h-[1.5rem]"></div>
+                <div class="mt-2 flex flex-wrap gap-3">
+                    <button id="scramble-skip" class="px-4 py-2 rounded-lg bg-zinc-800 text-gray-200 border border-zinc-700 transition">Skip</button>
+                    <button id="scramble-restart" class="px-4 py-2 rounded-lg bg-rose-700 text-white transition" disabled>Play Again</button>
+                </div>
+            </div>
+            <div class="w-full lg:w-80 bg-zinc-900/60 border border-zinc-800 rounded-xl p-5">
+                <h3 class="font-semibold text-white mb-3">Stats</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="flex justify-between"><span>Solved</span><span id="scramble-solved">0/5</span></div>
+                    <div class="flex justify-between"><span>Time</span><span id="scramble-time">0.0s</span></div>
+                    <div class="flex justify-between"><span>Best Time</span><span id="scramble-best">–</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="bg-zinc-950/60 border-t border-rose-900/40 py-12 mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-rose-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                <span class="text-gray-400">© 2025 DailyBrain</span>
+            </div>
+            <div class="flex gap-6">
+                <a href="privacy.html" class="text-gray-400 hover:text-rose-300 transition">Privacy</a>
+                <a href="contact.html" class="text-gray-400 hover:text-rose-300 transition">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIcon = document.getElementById('mobileMenuIcon');
+    const menuIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
+    const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenuIcon.innerHTML = mobileMenu.classList.contains('hidden') ? menuIcon : xIcon;
+    });
+
+    const pickerButtons = document.querySelectorAll('.game-card[data-game]');
+    const backToPicker = document.getElementById('backToPicker');
+    const gameInstructions = document.getElementById('game-instructions');
+    const views = {
+      reaction: document.getElementById('game-reaction'),
+      memory: document.getElementById('game-memory'),
+      'number-guess': document.getElementById('game-number-guess'),
+      rps: document.getElementById('game-rps'),
+      aim: document.getElementById('game-aim'),
+      minesweeper: document.getElementById('game-minesweeper'),
+      snake: document.getElementById('game-snake'),
+      simon: document.getElementById('game-simon'),
+      scramble: document.getElementById('game-scramble'),
+    };
+
+    function cleanupAll() {
+      // Reaction
+      clearTimeout(rtTimer);
+      // Aim
+      clearInterval(aimCountdownInterval); aimCountdownInterval = null;
+      if (aimTarget && aimTarget.parentNode) aimTarget.remove();
+      aimRunning = false;
+      // Minesweeper
+      clearInterval(msTimerInterval); msTimerInterval = null;
+      // Snake
+      clearInterval(snakeTimer); snakeTimer = null; snakeRunning = false;
+      if (snakeKeyHandler) document.removeEventListener('keydown', snakeKeyHandler);
+      // Simon
+      simonTimeouts.forEach(t => clearTimeout(t)); simonTimeouts = [];
+      // Scramble
+      clearInterval(scrambleTimerInterval); scrambleTimerInterval = null;
+    }
+
+    function showPicker() {
+      cleanupAll();
+      Object.values(views).forEach(v => v.classList.add('hidden'));
+      backToPicker.classList.add('hidden');
+      gameInstructions.textContent = 'Choose a game above to begin';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showGame(key) {
+      cleanupAll();
+      Object.values(views).forEach(v => v.classList.add('hidden'));
+      if (views[key]) views[key].classList.remove('hidden');
+      backToPicker.classList.remove('hidden');
+      gameInstructions.textContent = `Playing ${key.replace('-', ' ')}...`;
+      if (key === 'reaction') resetReactionUI();
+      if (key === 'memory') initMemoryGame();
+      if (key === 'number-guess') initNumberGuess();
+      if (key === 'rps') initRPS();
+      if (key === 'aim') initAim();
+      if (key === 'minesweeper') initMinesweeper();
+      if (key === 'snake') initSnake();
+      if (key === 'simon') initSimon();
+      if (key === 'scramble') initScramble();
+      setTimeout(() => window.scrollTo({ top: document.body.scrollHeight / 4, behavior: 'smooth' }), 50);
+    }
+
+    pickerButtons.forEach(btn => btn.addEventListener('click', () => showGame(btn.dataset.game)));
+    backToPicker.addEventListener('click', showPicker);
+
+    const rtArea = document.getElementById('rt-area');
+    const rtStart = document.getElementById('rt-start');
+    const rtTryAgain = document.getElementById('rt-try-again');
+    const rtReset = document.getElementById('rt-reset');
+    const rtAttempt = document.getElementById('rt-attempt');
+    const rtLast = document.getElementById('rt-last');
+    const rtAvg = document.getElementById('rt-avg');
+    const rtBest = document.getElementById('rt-best');
+
+    let rtState = 'idle';
+    let rtTimer = null;
+    let rtStartTime = 0;
+    let rtTimes = [];
+    const BEST_KEY = 'mini_reaction_best';
+
+    function fmt(ms) { return `${Math.round(ms)} ms`; }
+    function updateReactionStats() {
+      rtAttempt.textContent = `${rtTimes.length}/5`;
+      rtLast.textContent = rtTimes.length ? fmt(rtTimes[rtTimes.length - 1]) : '–';
+      if (rtTimes.length) {
+        const avg = rtTimes.reduce((a,b)=>a+b,0)/rtTimes.length;
+        rtAvg.textContent = fmt(avg);
+      } else {
+        rtAvg.textContent = '–';
+      }
+      const best = localStorage.getItem(BEST_KEY);
+      rtBest.textContent = best ? fmt(Number(best)) : '–';
+    }
+    function setArea(colorClass, text, textClass='text-rose-200') {
+      rtArea.className = `select-none rounded-xl h-64 flex items-center justify-center text-xl font-semibold border border-zinc-700 ${colorClass} ${textClass} cursor-pointer transition-colors`;
+      rtArea.textContent = text;
+    }
+    function resetReactionUI() {
+      clearTimeout(rtTimer);
+      rtState = 'idle';
+      rtTimes = [];
+      setArea('bg-rose-900/70','Click Start to begin');
+      rtTryAgain.disabled = true;
+      updateReactionStats();
+    }
+    function scheduleGo() {
+      const delay = 1200 + Math.random()*2000;
+      rtTimer = setTimeout(() => {
+        rtState = 'go';
+        rtStartTime = performance.now();
+        setArea('bg-emerald-600/80','GO!','text-white');
+      }, delay);
+    }
+
+    rtStart.addEventListener('click', () => {
+      if (rtTimes.length >= 5) rtTimes = [];
+      rtTryAgain.disabled = true;
+      rtState = 'waiting';
+      setArea('bg-rose-900/90','Wait for green...');
+      scheduleGo();
+      updateReactionStats();
+    });
+
+    rtTryAgain.addEventListener('click', () => {
+      if (rtTimes.length < 5) return;
+      rtTimes = [];
+      updateReactionStats();
+      rtStart.click();
+    });
+
+    rtReset.addEventListener('click', () => {
+      localStorage.removeItem(BEST_KEY);
+      updateReactionStats();
+    });
+
+    rtArea.addEventListener('click', () => {
+      if (rtState === 'waiting') {
+        clearTimeout(rtTimer);
+        setArea('bg-amber-600/80','Too soon! Click Start to try again','text-white');
+        rtState = 'idle';
+        rtTryAgain.disabled = rtTimes.length < 5;
+      } else if (rtState === 'go') {
+        const t = performance.now() - rtStartTime;
+        rtTimes.push(t);
+        setArea('bg-zinc-900/70', `Your time: ${fmt(t)}`);
+        const best = Number(localStorage.getItem(BEST_KEY) || Infinity);
+        if (t < best) localStorage.setItem(BEST_KEY, String(Math.round(t)));
+        rtState = 'idle';
+        if (rtTimes.length >= 5) {
+          const avg = rtTimes.reduce((a,b)=>a+b,0)/rtTimes.length;
+          setArea('bg-zinc-900/70', `Round complete! Avg: ${fmt(avg)}. Click Start or Try Again.`);
+          rtTryAgain.disabled = false;
+        }
+        updateReactionStats();
+      }
+    });
+
+    const memGrid = document.getElementById('mem-grid');
+    const memMovesEl = document.getElementById('mem-moves');
+    const memTimeEl = document.getElementById('mem-time');
+    const memBestMovesEl = document.getElementById('mem-best-moves');
+    const memBestTimeEl = document.getElementById('mem-best-time');
+    const memRestart = document.getElementById('mem-restart');
+    const memReset = document.getElementById('mem-reset');
+
+    const MEM_BEST_MOVES = 'mini_memory_best_moves';
+    const MEM_BEST_TIME = 'mini_memory_best_time';
+    let memEmojis = ['🍎','🚀','🐱','🎵','⚽','🌟','🍩','🎲'];
+    let memCards = [], memFirst = null, memLock = false, memMoves = 0;
+    let memStart = 0, memTimerHandle = null, memMatched = 0;
+
+    function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr;}
+    function updateMemStats(){
+      memMovesEl.textContent = String(memMoves);
+      memTimeEl.textContent = memStart ? `${((performance.now()-memStart)/1000).toFixed(1)}s` : '0.0s';
+      const bm = localStorage.getItem(MEM_BEST_MOVES);
+      const bt = localStorage.getItem(MEM_BEST_TIME);
+      memBestMovesEl.textContent = bm ? bm : '–';
+      memBestTimeEl.textContent = bt ? `${(Number(bt)/1000).toFixed(1)}s` : '–';
+    }
+    function stopMemTimer(){ if (memTimerHandle) cancelAnimationFrame(memTimerHandle); memTimerHandle=null; }
+    function tickMemTimer(){ updateMemStats(); memTimerHandle=requestAnimationFrame(tickMemTimer); }
+    function startMemTimer(){ memStart = performance.now(); tickMemTimer(); }
+    function createCard(emoji){
+      const w=document.createElement('button');
+      w.type='button';
+      w.className='card relative aspect-square rounded-xl bg-zinc-900 border border-zinc-800 hover:border-rose-800/60 transition';
+      w.innerHTML = `<div class="card-inner w-full h-full rounded-xl">
+          <div class="card-face absolute inset-0 rounded-xl flex items-center justify-center text-3xl bg-zinc-900">?</div>
+          <div class="card-face card-back absolute inset-0 rounded-xl flex items-center justify-center text-4xl bg-rose-900/50 border border-rose-800/50">${emoji}</div>
+        </div>`;
+      w.dataset.value = emoji;
+      return w;
+    }
+    function initMemoryGame(){
+      stopMemTimer();
+      memGrid.innerHTML=''; memCards=[]; memFirst=null; memLock=false;
+      memMoves=0; memMatched=0; memStart=0; updateMemStats();
+      const deck = shuffle([...memEmojis,...memEmojis]);
+      deck.forEach(val=>{ const c=createCard(val); memGrid.appendChild(c); memCards.push(c); });
+      memCards.forEach(card=>{
+        card.addEventListener('click', ()=>{
+          if (memLock) return;
+          if (!memStart) startMemTimer();
+          if (card.classList.contains('matched') || card.classList.contains('flip')) return;
+          card.classList.add('flip');
+          if (!memFirst) { memFirst=card; }
+          else {
+            memMoves++;
+            const isMatch = memFirst.dataset.value===card.dataset.value;
+            if (isMatch){
+              memFirst.classList.add('matched'); card.classList.add('matched');
+              memFirst=null; memMatched+=2;
+              if (memMatched===memCards.length){
+                stopMemTimer();
+                const elapsed=performance.now()-memStart;
+                const bestMoves=Number(localStorage.getItem(MEM_BEST_MOVES)||Infinity);
+                const bestTime=Number(localStorage.getItem(MEM_BEST_TIME)||Infinity);
+                if (memMoves<bestMoves) localStorage.setItem(MEM_BEST_MOVES,String(memMoves));
+                if (elapsed<bestTime) localStorage.setItem(MEM_BEST_TIME,String(Math.round(elapsed)));
+                updateMemStats();
+              }
+              updateMemStats();
+            } else {
+              memLock=true;
+              setTimeout(()=>{ memFirst.classList.remove('flip'); card.classList.remove('flip'); memFirst=null; memLock=false; },700);
+            }
+            updateMemStats();
+          }
+        });
+      });
+    }
+    memRestart.addEventListener('click', initMemoryGame);
+    memReset.addEventListener('click', ()=>{ localStorage.removeItem(MEM_BEST_MOVES); localStorage.removeItem(MEM_BEST_TIME); updateMemStats(); });
+
+    const ngInput=document.getElementById('ng-guess-input');
+    const ngSubmit=document.getElementById('ng-submit-guess');
+    const ngFeedback=document.getElementById('ng-feedback');
+    const ngAttemptsLeft=document.getElementById('ng-attempts-left');
+    const ngPlayAgain=document.getElementById('ng-play-again');
+    const ngResetStats=document.getElementById('ng-reset-stats');
+    const ngLastGuess=document.getElementById('ng-last-guess');
+    const ngBestAttempts=document.getElementById('ng-best-attempts');
+    let ngSecretNumber=0, ngAttempts=10, ngGuesses=[];
+    const NG_BEST_KEY='mini_number_guess_best';
+    function initNumberGuess(){
+      ngSecretNumber=Math.floor(Math.random()*100)+1;
+      ngAttempts=10; ngGuesses=[]; ngInput.value=''; ngFeedback.textContent='';
+      ngAttemptsLeft.textContent=ngAttempts; ngLastGuess.textContent='–';
+      ngInput.disabled=false; ngSubmit.disabled=false; ngPlayAgain.disabled=true;
+      ngBestAttempts.textContent=localStorage.getItem(NG_BEST_KEY)||'–';
+    }
+    function checkGuess(){
+      const guess=parseInt(ngInput.value);
+      if (isNaN(guess)||guess<1||guess>100){ ngFeedback.textContent='Enter a number 1-100'; ngFeedback.className='mb-4 text-lg font-medium text-amber-500'; return; }
+      ngGuesses.push(guess); ngAttempts--; ngAttemptsLeft.textContent=ngAttempts; ngLastGuess.textContent=guess;
+      if (guess===ngSecretNumber){
+        ngFeedback.textContent=`Correct! The number was ${ngSecretNumber}.`; ngFeedback.className='mb-4 text-lg font-medium text-emerald-500';
+        ngInput.disabled=true; ngSubmit.disabled=true; ngPlayAgain.disabled=false;
+        const best = Number(localStorage.getItem(NG_BEST_KEY)||Infinity);
+        if (ngGuesses.length<best){ localStorage.setItem(NG_BEST_KEY,String(ngGuesses.length)); ngBestAttempts.textContent=String(ngGuesses.length); }
+      } else if (ngAttempts===0){
+        ngFeedback.textContent=`Game over! The number was ${ngSecretNumber}.`; ngFeedback.className='mb-4 text-lg font-medium text-rose-500';
+        ngInput.disabled=true; ngSubmit.disabled=true; ngPlayAgain.disabled=false;
+      } else {
+        const low = guess<ngSecretNumber; ngFeedback.textContent = low?'Too low!':'Too high!';
+        ngFeedback.className = `mb-4 text-lg font-medium ${low?'text-blue-400':'text-orange-400'}`;
+      }
+      ngInput.value='';
+    }
+    ngSubmit.addEventListener('click', checkGuess);
+    ngInput.addEventListener('keypress', e=>{ if (e.key==='Enter') checkGuess(); });
+    ngPlayAgain.addEventListener('click', initNumberGuess);
+    ngResetStats.addEventListener('click', ()=>{ localStorage.removeItem(NG_BEST_KEY); ngBestAttempts.textContent='–'; });
+
+    const rpsChoices=['rock','paper','scissors'];
+    const rpsComputerChoiceDisplay=document.getElementById('rps-computer-choice');
+    const rpsResult=document.getElementById('rps-result');
+    const rpsPlayerScoreEl=document.getElementById('rps-player-score');
+    const rpsComputerScoreEl=document.getElementById('rps-computer-score');
+    const rpsBestStreakEl=document.getElementById('rps-best-streak');
+    const rpsPlayAgain=document.getElementById('rps-play-again');
+    const rpsResetGame=document.getElementById('rps-reset-game');
+    const rpsChoiceButtons=document.querySelectorAll('.rps-choice');
+    let rpsPlayerScore=0, rpsComputerScore=0, rpsCurrentStreak=0, rpsBestStreak=0;
+    const RPS_BEST_STREAK_KEY='mini_rps_best_streak';
+    function getRPSResult(p,c){ if (p===c) return 'tie'; if ((p==='rock'&&c==='scissors')||(p==='scissors'&&c==='paper')||(p==='paper'&&c==='rock')) return 'win'; return 'lose'; }
+    function updateRPSStats(){ rpsPlayerScoreEl.textContent=rpsPlayerScore; rpsComputerScoreEl.textContent=rpsComputerScore; rpsBestStreakEl.textContent=rpsBestStreak; }
+    function resetRPSGame(){ rpsPlayerScore=0; rpsComputerScore=0; rpsCurrentStreak=0; rpsComputerChoiceDisplay.textContent='?'; rpsResult.textContent=''; rpsPlayAgain.disabled=true; rpsChoiceButtons.forEach(b=>b.disabled=false); updateRPSStats(); }
+    function initRPS(){ resetRPSGame(); rpsBestStreak=Number(localStorage.getItem(RPS_BEST_STREAK_KEY))||0; updateRPSStats(); }
+    rpsChoiceButtons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        if (rpsPlayerScore>=3||rpsComputerScore>=3) return;
+        const p=btn.dataset.choice; const c=rpsChoices[Math.floor(Math.random()*3)];
+        const res=getRPSResult(p,c); rpsComputerChoiceDisplay.textContent=c[0].toUpperCase()+c.slice(1);
+        if (res==='win'){ rpsPlayerScore++; rpsCurrentStreak++; rpsResult.textContent='You win!'; rpsResult.className='text-center text-2xl font-bold mb-4 text-emerald-500'; }
+        else if (res==='lose'){ rpsComputerScore++; rpsCurrentStreak=0; rpsResult.textContent='Computer wins!'; rpsResult.className='text-center text-2xl font-bold mb-4 text-rose-500'; }
+        else { rpsResult.textContent='It\'s a tie!'; rpsResult.className='text-center text-2xl font-bold mb-4 text-gray-400'; }
+        if (rpsCurrentStreak>rpsBestStreak){ rpsBestStreak=rpsCurrentStreak; localStorage.setItem(RPS_BEST_STREAK_KEY,String(rpsBestStreak)); }
+        if (rpsPlayerScore>=3||rpsComputerScore>=3){ rpsPlayAgain.disabled=false; rpsChoiceButtons.forEach(b=>b.disabled=true); rpsResult.textContent += rpsPlayerScore>rpsComputerScore?' You won the match!':' Computer won the match!'; }
+        else { rpsPlayAgain.disabled=false; }
+        updateRPSStats();
+      });
+    });
+    rpsPlayAgain.addEventListener('click', initRPS);
+    rpsResetGame.addEventListener('click', ()=>{ localStorage.removeItem(RPS_BEST_STREAK_KEY); initRPS(); });
+
+    const aimArea=document.getElementById('aim-area');
+    const aimStart=document.getElementById('aim-start');
+    const aimReset=document.getElementById('aim-reset');
+    const aimTimeEl=document.getElementById('aim-time');
+    const aimHitsEl=document.getElementById('aim-hits');
+    const aimShotsEl=document.getElementById('aim-shots');
+    const aimAccEl=document.getElementById('aim-acc');
+    const aimBestEl=document.getElementById('aim-best');
+    const AIM_BEST_KEY='mini_aim_best_hits';
+    let aimTimeLeft=30, aimHits=0, aimShots=0, aimRunning=false, aimTarget=null, aimCountdownInterval=null;
+
+    function updateAimStats(){
+      aimTimeEl.textContent = `${aimTimeLeft}s`;
+      aimHitsEl.textContent = aimHits;
+      aimShotsEl.textContent = aimShots;
+      const acc = aimShots ? Math.round((aimHits/aimShots)*100) : 0;
+      aimAccEl.textContent = `${acc}%`;
+      aimBestEl.textContent = localStorage.getItem(AIM_BEST_KEY) || '–';
+    }
+    function spawnTarget(){
+      if (!aimRunning) return;
+      if (aimTarget && aimTarget.parentNode) aimTarget.remove();
+      const size = 44;
+      const rect = aimArea.getBoundingClientRect();
+      const xMax = aimArea.clientWidth - size;
+      const yMax = aimArea.clientHeight - size;
+      const x = Math.floor(Math.random()*xMax);
+      const y = Math.floor(Math.random()*yMax);
+      const t = document.createElement('div');
+      t.className='absolute rounded-full w-11 h-11 border-2 border-rose-400 bg-gradient-to-br from-rose-600 to-fuchsia-600 shadow';
+      t.style.left=`${x}px`; t.style.top=`${y}px`;
+      t.addEventListener('click', (e)=>{ e.stopPropagation(); if (!aimRunning) return; aimHits++; aimShots++; updateAimStats(); spawnTarget(); });
+      aimArea.appendChild(t); aimTarget=t;
+    }
+    function endAim(){
+      aimRunning=false; clearInterval(aimCountdownInterval); aimCountdownInterval=null;
+      if (aimTarget && aimTarget.parentNode) aimTarget.remove();
+      const best = Number(localStorage.getItem(AIM_BEST_KEY)||0);
+      if (aimHits>best) localStorage.setItem(AIM_BEST_KEY,String(aimHits));
+      updateAimStats();
+    }
+    function initAim(){
+      aimTimeLeft=30; aimHits=0; aimShots=0; aimRunning=false;
+      if (aimTarget && aimTarget.parentNode) aimTarget.remove();
+      updateAimStats();
+    }
+    aimArea.addEventListener('click', ()=>{ if (!aimRunning) return; aimShots++; updateAimStats(); });
+    aimStart.addEventListener('click', ()=>{
+      initAim(); aimRunning=true; spawnTarget();
+      aimCountdownInterval=setInterval(()=>{ aimTimeLeft--; updateAimStats(); if (aimTimeLeft<=0) endAim(); },1000);
+    });
+    aimReset.addEventListener('click', ()=>{ localStorage.removeItem(AIM_BEST_KEY); updateAimStats(); });
+
+    const MS_ROWS=9, MS_COLS=9, MS_BOMBS=10;
+    const msGrid=document.getElementById('ms-grid');
+    const msRestart=document.getElementById('ms-restart');
+    const msBombsLeftEl=document.getElementById('ms-bombs-left');
+    const msTimeEl=document.getElementById('ms-time');
+    const msWinsEl=document.getElementById('ms-wins');
+    const msBestEl=document.getElementById('ms-best');
+    const MS_WINS_KEY='mini_ms_wins';
+    const MS_BEST_KEY='mini_ms_best_time';
+    let msBoard=[], msFirstClick=true, msFlags=0, msRevealed=0, msStartTime=0, msTimerInterval=null;
+
+    function msNeighbors(r,c){ const n=[]; for(let dr=-1;dr<=1;dr++){for(let dc=-1;dc<=1;dc++){ if(dr===0&&dc===0) continue; const nr=r+dr,nc=c+dc; if(nr>=0&&nr<MS_ROWS&&nc>=0&&nc<MS_COLS) n.push([nr,nc]); }} return n; }
+    function msPlaceBombs(excludeR,excludeC){
+      let bombs=0;
+      while(bombs<MS_BOMBS){
+        const r=Math.floor(Math.random()*MS_ROWS), c=Math.floor(Math.random()*MS_COLS);
+        if ((r===excludeR && c===excludeC) || msBoard[r][c].bomb) continue;
+        msBoard[r][c].bomb=true; bombs++;
+      }
+      for(let r=0;r<MS_ROWS;r++){ for(let c=0;c<MS_COLS;c++){
+        if (msBoard[r][c].bomb){ msBoard[r][c].adj=0; continue; }
+        msBoard[r][c].adj = msNeighbors(r,c).filter(([nr,nc])=>msBoard[nr][nc].bomb).length;
+      }}
+    }
+    function msReveal(r,c){
+      const cell=msBoard[r][c];
+      if (cell.revealed || cell.flagged || cell.el.disabled) return;
+      cell.revealed=true; msRevealed++;
+      cell.el.classList.add('ms-open','bg-zinc-800'); cell.el.classList.remove('hover:border-rose-800/60');
+      if (cell.bomb){
+        cell.el.textContent='💣';
+        msGameOver(false);
+        return;
+      }
+      if (cell.adj>0){
+        cell.el.textContent=cell.adj;
+        const colors=['','#60a5fa','#34d399','#fbbf24','#f87171','#a78bfa','#f472b6','#38bdf8','#facc15'];
+        cell.el.style.color = colors[cell.adj] || '#e5e7eb';
+      } else {
+        cell.el.textContent='';
+        msNeighbors(r,c).forEach(([nr,nc])=>{ if (!msBoard[nr][nc].revealed) msReveal(nr,nc); });
+      }
+      if (msRevealed === MS_ROWS*MS_COLS - MS_BOMBS) msGameOver(true);
+    }
+    function msToggleFlag(r,c){
+      const cell=msBoard[r][c];
+      if (cell.revealed || cell.el.disabled) return;
+
+      cell.flagged = !cell.flagged;
+      cell.el.textContent = cell.flagged ? '🚩' : '';
+      msFlags += cell.flagged ? 1 : -1;
+      msBombsLeftEl.textContent = String(MS_BOMBS - msFlags);
+    }
+    function msGameOver(win){
+      clearInterval(msTimerInterval); msTimerInterval=null;
+
+      msBoard.forEach(row => row.forEach(cell => {
+        cell.el.disabled = true;
+        cell.el.classList.remove('hover:border-rose-800/60');
+      }));
+
+      if (!win){
+        for(let r=0;r<MS_ROWS;r++){ for(let c=0;c<MS_COLS;c++){
+          const cell=msBoard[r][c];
+          if (cell.bomb && !cell.flagged){
+            cell.el.textContent='💣';
+            cell.el.classList.add('ms-open','bg-zinc-800');
+          } else if (cell.flagged && !cell.bomb) {
+            cell.el.textContent='❌';
+            cell.el.style.color = '#ef4444';
+          }
+        }}
+
+        msTimeEl.textContent = "Game Over!";
+        msTimeEl.style.color = "#ef4444";
+      } else {
+        const elapsed = Math.round((performance.now()-msStartTime)/1000);
+        const best = Number(localStorage.getItem(MS_BEST_KEY)||Infinity);
+        if (elapsed<best) localStorage.setItem(MS_BEST_KEY,String(elapsed));
+        localStorage.setItem(MS_WINS_KEY, String(Number(localStorage.getItem(MS_WINS_KEY)||0)+1));
+        msTimeEl.textContent = `${elapsed}s (Win!)`;
+        msTimeEl.style.color = "#34d399";
+      }
+      msBestEl.textContent = localStorage.getItem(MS_BEST_KEY) ? `${localStorage.getItem(MS_BEST_KEY)}s` : '–';
+      msWinsEl.textContent = localStorage.getItem(MS_WINS_KEY)||'0';
+    }
+    function initMinesweeper(){
+      clearInterval(msTimerInterval); msTimerInterval=null;
+      msGrid.innerHTML=''; msBoard=[]; msFirstClick=true; msFlags=0; msRevealed=0; msBombsLeftEl.textContent=String(MS_BOMBS);
+      msTimeEl.textContent='0s'; msTimeEl.style.color = '';
+      msWinsEl.textContent=localStorage.getItem(MS_WINS_KEY)||'0';
+      msBestEl.textContent=localStorage.getItem(MS_BEST_KEY)?`${localStorage.getItem(MS_BEST_KEY)}s`:'–';
+      for(let r=0;r<MS_ROWS;r++){
+        msBoard[r]=[];
+        for(let c=0;c<MS_COLS;c++){
+          const btn=document.createElement('button');
+          btn.className='ms-tile rounded-lg bg-zinc-900 border border-zinc-800 hover:border-rose-800/60 flex items-center justify-center text-sm font-bold';
+          btn.tabIndex = 0;
+          btn.oncontextmenu=(e)=>{ e.preventDefault(); msToggleFlag(r,c); };
+          btn.addEventListener('click', ()=>{
+            if (btn.disabled) return;
+            if (msFirstClick){
+              msFirstClick=false; msPlaceBombs(r,c);
+              msStartTime=performance.now();
+              msTimerInterval=setInterval(()=>{ msTimeEl.textContent = `${Math.floor((performance.now()-msStartTime)/1000)}s`; },500);
+            }
+            msReveal(r,c);
+          });
+          msGrid.appendChild(btn);
+          msBoard[r][c]={bomb:false, revealed:false, flagged:false, adj:0, el:btn};
+        }
+      }
+    }
+    msRestart.addEventListener('click', initMinesweeper);
+
+    const snakeCanvas=document.getElementById('snake-canvas');
+    const ctx=snakeCanvas.getContext('2d');
+    const snakeStartBtn=document.getElementById('snake-start');
+    const snakeRestartBtn=document.getElementById('snake-restart');
+    const snakeScoreEl=document.getElementById('snake-score');
+    const snakeBestEl=document.getElementById('snake-best');
+    const SNAKE_BEST_KEY='mini_snake_best';
+    const CELL=20, GRID=20;
+    let snake=[], dir={x:1,y:0}, food=null, snakeTimer=null, snakeRunning=false, snakeScore=0, snakeKeyHandler=null;
+
+    function snakePlaceFood(){
+      let x,y,occupied=true;
+      while(occupied){
+        x=Math.floor(Math.random()*GRID); y=Math.floor(Math.random()*GRID);
+        occupied = snake.some(s=>s.x===x&&s.y===y);
+      }
+      food={x,y};
+    }
+    function draw(){
+      ctx.fillStyle='#0b0b0f'; ctx.fillRect(0,0,400,400);
+
+      ctx.save();
+      ctx.beginPath();
+      const foodRadius = CELL / 2 * 0.7;
+      ctx.arc(food.x * CELL + CELL / 2, food.y * CELL + CELL / 2, foodRadius, 0, Math.PI * 2);
+      const foodGradient = ctx.createRadialGradient(
+        food.x * CELL + CELL / 2, food.y * CELL + CELL / 2, foodRadius * 0.3,
+        food.x * CELL + CELL / 2, food.y * CELL + CELL / 2, foodRadius
+      );
+      foodGradient.addColorStop(0, '#f43f5e');
+      foodGradient.addColorStop(1, '#be123c');
+      ctx.fillStyle = foodGradient;
+      ctx.fill();
+      ctx.restore();
+
+      snake.forEach((s,i)=>{
+        ctx.save();
+        const x = s.x * CELL;
+        const y = s.y * CELL;
+        const padding = 2;
+
+
+        let segmentGradient = ctx.createLinearGradient(x, y, x + CELL, y + CELL);
+        if (i === 0) { // Head
+          segmentGradient.addColorStop(0, '#d8b4fe');
+          segmentGradient.addColorStop(1, '#a78bfa');
+        } else { // Body
+          segmentGradient.addColorStop(0, '#a1a1aa');
+          segmentGradient.addColorStop(1, '#71717a');
+        }
+        ctx.fillStyle = segmentGradient;
+
+        ctx.beginPath();
+        ctx.roundRect(x + padding, y + padding, CELL - 2*padding, CELL - 2*padding, 4); // x, y, width, height, borderRadius
+        ctx.fill();
+        ctx.restore();
+      });
+    }
+    function tick(){
+      const head={x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+      if (head.x<0||head.x>=GRID||head.y<0||head.y>=GRID || snake.some(s=>s.x===head.x&&s.y===head.y)){
+
+        snakeRunning=false; clearInterval(snakeTimer); snakeTimer=null;
+        const best = Number(localStorage.getItem(SNAKE_BEST_KEY)||0);
+        if (snakeScore>best) localStorage.setItem(SNAKE_BEST_KEY,String(snakeScore));
+        snakeBestEl.textContent = localStorage.getItem(SNAKE_BEST_KEY)||'–';
+        snakeStartBtn.textContent = 'Game Over!';
+        snakeStartBtn.disabled = true;
+        return;
+      }
+      snake.unshift(head);
+      if (head.x===food.x && head.y===food.y){
+        snakeScore++; snakeScoreEl.textContent=String(snakeScore); snakePlaceFood();
+      } else {
+        snake.pop();
+      }
+      draw();
+    }
+    function initSnake(){
+      clearInterval(snakeTimer); snakeTimer=null; snakeRunning=false;
+      snake=[{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+      dir={x:1,y:0}; snakeScore=0; snakeScoreEl.textContent='0'; snakeBestEl.textContent=localStorage.getItem(SNAKE_BEST_KEY)||'–';
+      snakePlaceFood(); draw();
+      snakeStartBtn.textContent = 'Start / Pause';
+      snakeStartBtn.disabled = false;
+      if (snakeKeyHandler) document.removeEventListener('keydown', snakeKeyHandler);
+      snakeKeyHandler=(e)=>{
+        const k=e.key.toLowerCase();
+        if ((k==='arrowup'||k==='w')&&dir.y!==1) dir={x:0,y:-1};
+        else if ((k==='arrowdown'||k==='s')&&dir.y!==-1) dir={x:0,y:1};
+        else if ((k==='arrowleft'||k==='a')&&dir.x!==1) dir={x:-1,y:0};
+        else if ((k==='arrowright'||k==='d')&&dir.x!==-1) dir={x:1,y:0};
+      };
+      document.addEventListener('keydown', snakeKeyHandler);
+    }
+    snakeStartBtn.addEventListener('click', ()=>{
+      if (snakeRunning){ snakeRunning=false; clearInterval(snakeTimer); snakeTimer=null; }
+      else { snakeRunning=true; if (!snakeTimer) snakeTimer=setInterval(tick,120); }
+    });
+    snakeRestartBtn.addEventListener('click', initSnake);
+
+    const simonPads=document.querySelectorAll('.simon-pad');
+    const simonStart=document.getElementById('simon-start');
+    const simonLevelEl=document.getElementById('simon-level');
+    const simonBestEl=document.getElementById('simon-best');
+    const simonStatus=document.getElementById('simon-status');
+    const SIMON_BEST_KEY='mini_simon_best';
+    let simonSeq=[], simonUserIndex=0, simonAccepting=false, simonTimeouts=[];
+
+    const padMap = {
+      rose: simonPads[0],
+      fuchsia: simonPads[1],
+      violet: simonPads[2],
+      pink: simonPads[3],
+    };
+    const colors = Object.keys(padMap);
+    function flash(color, delay=0){
+      const pad=padMap[color];
+      const t1=setTimeout(()=>{ pad.classList.add('active'); }, delay);
+      const t2=setTimeout(()=>{ pad.classList.remove('active'); }, delay+450);
+      simonTimeouts.push(t1,t2);
+    }
+    function playSequence(){
+      simonAccepting=false;
+      simonStatus.textContent='Watch...';
+      simonSeq.forEach((c,i)=>flash(c, i*600));
+      const t=setTimeout(()=>{ simonAccepting=true; simonStatus.textContent='Your turn'; simonUserIndex=0; }, simonSeq.length*600+100);
+      simonTimeouts.push(t);
+    }
+    function nextRound(){
+      simonSeq.push(colors[Math.floor(Math.random()*colors.length)]);
+      simonLevelEl.textContent=String(simonSeq.length);
+      playSequence();
+    }
+    function initSimon(){
+      simonTimeouts.forEach(t=>clearTimeout(t)); simonTimeouts=[];
+      simonSeq=[]; simonUserIndex=0; simonAccepting=false;
+      simonLevelEl.textContent='0';
+      simonBestEl.textContent=localStorage.getItem(SIMON_BEST_KEY)||'–';
+      simonStatus.textContent='';
+    }
+    simonPads.forEach(pad=>{
+      pad.addEventListener('click', ()=>{
+        if (!simonAccepting) return;
+        const color = pad.dataset.color;
+        pad.classList.add('active'); setTimeout(()=>pad.classList.remove('active'),150);
+        if (color===simonSeq[simonUserIndex]){
+          simonUserIndex++;
+          if (simonUserIndex===simonSeq.length){
+            const best = Number(localStorage.getItem(SIMON_BEST_KEY)||0);
+            if (simonSeq.length>best) localStorage.setItem(SIMON_BEST_KEY,String(simonSeq.length));
+            simonBestEl.textContent=localStorage.getItem(SIMON_BEST_KEY)||'–';
+            setTimeout(nextRound, 600);
+          }
+        } else {
+          simonAccepting=false;
+          simonStatus.textContent='Wrong! Press Start to try again.';
+        }
+      });
+    });
+    simonStart.addEventListener('click', ()=>{ initSimon(); nextRound(); });
+
+    const scrambleWordEl=document.getElementById('scramble-word');
+    const scrambleInput=document.getElementById('scramble-input');
+    const scrambleSubmit=document.getElementById('scramble-submit');
+    const scrambleSkip=document.getElementById('scramble-skip');
+    const scrambleRestart=document.getElementById('scramble-restart');
+    const scrambleFeedback=document.getElementById('scramble-feedback');
+    const scrambleSolvedEl=document.getElementById('scramble-solved');
+    const scrambleTimeEl=document.getElementById('scramble-time');
+    const scrambleBestEl=document.getElementById('scramble-best');
+    const SCRAMBLE_BEST_KEY='mini_scramble_best_time';
+
+    const WORDS=['planet','galaxy','puzzle','memory','rocket','python','matrix','silver','castle','jungle','ocean','pencil','random','signal','future','marble','violet','thunder','secret','guitar'];
+    let scrambleCurrent='', scrambleShuffled='', scrambleSolved=0, scrambleStart=0, scrambleTimerInterval=null;
+    let scrambleAvailableWords = [];
+
+    function shuffleStr(str){
+      const a=str.split('');
+      for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+      const res=a.join('');
+      return res===str ? shuffleStr(str) : res;
+    }
+    function setScrambleWord(){
+      if (scrambleAvailableWords.length === 0) {
+        stopScrambleTimer();
+        const elapsed = performance.now() - scrambleStart;
+        const best = Number(localStorage.getItem(SCRAMBLE_BEST_KEY) || Infinity);
+        if (elapsed < best) localStorage.setItem(SCRAMBLE_BEST_KEY, String(Math.round(elapsed)));
+        scrambleBestEl.textContent = `${(Number(localStorage.getItem(SCRAMBLE_BEST_KEY)) / 1000).toFixed(1)}s`;
+        scrambleRestart.disabled = false;
+        scrambleFeedback.textContent = 'Round complete!';
+        scrambleFeedback.className = 'mb-4 text-lg font-medium text-emerald-500';
+        scrambleWordEl.textContent = '🎉';
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * scrambleAvailableWords.length);
+      scrambleCurrent = scrambleAvailableWords[randomIndex];
+      scrambleAvailableWords.splice(randomIndex, 1);
+
+      scrambleShuffled = shuffleStr(scrambleCurrent);
+      scrambleWordEl.textContent = scrambleShuffled.toUpperCase().split('').join(' ');
+      scrambleInput.value=''; scrambleInput.focus();
+      scrambleFeedback.textContent='';
+    }
+    function startScrambleTimer(){
+      scrambleStart = performance.now();
+      scrambleTimerInterval = setInterval(()=>{
+        scrambleTimeEl.textContent = `${((performance.now()-scrambleStart)/1000).toFixed(1)}s`;
+      },100);
+    }
+    function stopScrambleTimer(){ clearInterval(scrambleTimerInterval); scrambleTimerInterval=null; }
+    function initScramble(){
+      stopScrambleTimer(); scrambleSolved=0; scrambleSolvedEl.textContent='0/5';
+      scrambleBestEl.textContent = localStorage.getItem(SCRAMBLE_BEST_KEY) ? `${(Number(localStorage.getItem(SCRAMBLE_BEST_KEY))/1000).toFixed(1)}s` : '–';
+
+      scrambleAvailableWords = shuffle([...WORDS]).slice(0, 5);
+
+      setScrambleWord(); startScrambleTimer(); scrambleRestart.disabled=true;
+    }
+    function submitScramble(){
+      const guess=(scrambleInput.value||'').toLowerCase().trim();
+      if (!guess) return;
+      if (guess===scrambleCurrent){
+        scrambleSolved++; scrambleSolvedEl.textContent=`${scrambleSolved}/5`;
+        scrambleFeedback.textContent='Correct!'; scrambleFeedback.className='mb-4 text-lg font-medium text-emerald-500';
+        if (scrambleSolved>=5){
+          stopScrambleTimer();
+          const elapsed = performance.now()-scrambleStart;
+          const best = Number(localStorage.getItem(SCRAMBLE_BEST_KEY)||Infinity);
+          if (elapsed<best) localStorage.setItem(SCRAMBLE_BEST_KEY,String(Math.round(elapsed)));
+          scrambleBestEl.textContent = `${(Number(localStorage.getItem(SCRAMBLE_BEST_KEY))/1000).toFixed(1)}s`;
+          scrambleRestart.disabled=false;
+          scrambleWordEl.textContent = '✅';
+        } else {
+          setTimeout(setScrambleWord, 500);
+        }
+      } else {
+        scrambleFeedback.textContent='Try again.'; scrambleFeedback.className='mb-4 text-lg font-medium text-rose-400';
+      }
+      scrambleInput.value='';
+    }
+    scrambleSubmit.addEventListener('click', submitScramble);
+    scrambleInput.addEventListener('keypress', e=>{ if (e.key==='Enter') submitScramble(); });
+    scrambleSkip.addEventListener('click', setScrambleWord);
+    scrambleRestart.addEventListener('click', initScramble);
+
+    showPicker();
+</script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - DailyBrain</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620034936116811"
+            crossorigin="anonymous"></script>
+
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% auto;
+            animation: gradientBG 5s ease infinite;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        body {
+            background: linear-gradient(to bottom right, from-indigo-950 to-purple-950) !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-indigo-950 to-purple-950 transition-all duration-500 text-gray-100">
+
+<!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-indigo-950/90 backdrop-blur-lg border-b border-purple-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <span class="w-8 h-8 text-purple-400 mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-8 h-8"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                </span>
+                <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-indigo-400 bg-clip-text text-transparent">
+                    DailyBrain
+                </span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-medium">Home</a>
+                <a href="about.html" class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-medium">About</a>
+            </div>
+
+            <!-- Right side buttons -->
+            <div class="flex items-center space-x-4">
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-lg bg-indigo-900">
+                    <span id="mobileMenuIcon" class="w-5 h-5 text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-indigo-950 border-b border-purple-900/50 shadow-lg">
+        <div class="px-4 pt-2 pb-4 space-y-2">
+            <a href="index.html" class="block w-full text-left px-3 py-2 text-gray-300 hover:bg-indigo-900 rounded-lg transition-colors duration-200">Home</a>
+            <a href="onthisday.html" class="block w-full text-left px-3 py-2 text-gray-300 hover:bg-indigo-900 rounded-lg transition-colors duration-200">On This Day</a>
+            <a href="about.html" class="block w-full text-left px-3 py-2 text-gray-300 hover:bg-indigo-900 rounded-lg transition-colors duration-200">About</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="relative py-24 lg:py-32 overflow-hidden">
+    <!-- Decorative Elements -->
+    <div class="absolute top-0 left-0 w-full h-full z-0 opacity-30 pointer-events-none">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-72 h-72 bg-indigo-300 dark:bg-indigo-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-pulse"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent">
+                    About DailyBrain
+                </span>
+                <br>
+                <span class="text-gray-300">Your Daily Mind Challenge</span>
+            </h1>
+            <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+               Information about Daily Brains!
+            </p>
+        </div>
+
+        <!-- About Content -->
+        <div class="max-w-4xl mx-auto space-y-16">
+            <!-- About Section -->
+            <div class="bg-indigo-950/50 border border-purple-900/50 rounded-3xl p-8 md:p-12 shadow-xl animate-gradient from-indigo-950 to-purple-950">
+                <h2 class="text-3xl font-bold text-white mb-6">Daily Brains</h2>
+                <p class="text-gray-300 text-lg leading-relaxed">
+                  I created Daily Brains as a fun daily website you can explore you can play Wordle, Daily Quizzes, put your opinion in the Daily Polls, look at the Daily Facts and On This Day, and even more!
+                </p>
+            </div>
+
+
+            <!-- Creator Section -->
+            <div class="bg-indigo-950/50 border border-purple-900/50 rounded-3xl p-8 md:p-12 shadow-xl text-center">
+                <h2 class="text-3xl font-bold text-white mb-6">Meet the Creator</h2>
+                <div class="flex flex-col items-center">
+                    <div class="w-32 h-32 rounded-full bg-purple-900/50 flex items-center justify-center mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-purple-400"><path d="M12 2v20"/><path d="M2 12h20"/></svg>
+                    </div>
+                    <h3 class="text-2xl font-semibold text-white mb-2">Mattias</h3>
+                    <p class="text-gray-400 max-w-2xl">
+                        DailyBrain was created by me Mattias as a fun side project as I love coding.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- BTH Section -->
+        <div class="text-center mt-16">
+            <a href="index.html" class="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full font-semibold hover:shadow-2xl hover:scale-105 transition-all duration-300">
+                Back To Home
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-indigo-950/50 border-t border-purple-900/50 py-12 mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6 text-purple-400 mr-2"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                <span class="text-gray-400">© 2025 DailyBrain. All rights reserved.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="privacy.html" class="text-gray-400 hover:text-purple-400 transition-colors">Privacy</a>
+                <a href="contact.html" class="text-gray-400 hover:text-purple-400 transition-colors">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIconContainer = document.getElementById('mobileMenuIcon');
+    const menuIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-menu w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
+    const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuIconContainer.innerHTML = mobileMenu.classList.contains('hidden') ? menuIcon : xIcon;
+    });
+</script>
+
+</body>
+</html>

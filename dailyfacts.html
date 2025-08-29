@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Facts - DailyBrain</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620034936116811"
+            crossorigin="anonymous"></script>
+
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% auto;
+            animation: gradientBG 5s ease infinite;
+        }
+        .fact-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+        .fact-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #a855f7;
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        body {
+            background: linear-gradient(to bottom right, from-gray-900 to-black) !important;
+        }
+        .fact-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .fact-expanded {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 to-black transition-all duration-500 text-gray-100">
+
+<!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-lg border-b border-purple-900/50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <div class="flex items-center">
+                <span class="w-8 h-8 text-purple-400 mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-8 h-8"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                </span>
+                <span class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                    DailyBrain
+                </span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-medium">Home</a>
+                <a href="about.html" class="text-gray-300 hover:text-purple-400 transition-colors duration-200 font-medium">About</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-lg bg-gray-800">
+                    <span id="mobileMenuIcon" class="w-5 h-5 text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-gray-900 border-b border-purple-900/50 shadow-lg">
+        <div class="px-4 pt-2 pb-4 space-y-2">
+            <a href="index.html" class="block w-full text-left px-3 py-2 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors duration-200">Home</a>
+            <a href="about.html" class="block w-full text-left px-3 py-2 text-gray-300 hover:bg-gray-800 rounded-lg transition-colors duration-200">About</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Content -->
+<main class="relative py-20 lg:py-28 overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full z-0 opacity-20">
+        <div class="absolute top-20 left-10 w-64 h-64 bg-purple-700/30 rounded-full mix-blend-overlay filter blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-72 h-72 bg-purple-600/30 rounded-full mix-blend-overlay filter blur-3xl animate-pulse"></div>
+    </div>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-purple-400 via-pink-400 to-indigo-400 bg-clip-text text-transparent">
+                    Daily Facts
+                </span>
+                <br>
+                <span class="text-gray-300">Learn Something New</span>
+            </h1>
+            <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                Expand your knowledge with fascinating facts just for you.
+            </p>
+        </div>
+
+        <!-- Facts Container -->
+        <div id="facts-container" class="space-y-6">
+        </div>
+
+        <div id="completed-section" class="max-w-3xl mx-auto bg-gray-800/50 border border-purple-900/50 rounded-3xl shadow-xl p-8 md:p-12 text-center hidden">
+            <div class="w-24 h-24 mx-auto mb-6 bg-purple-900/30 rounded-full flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 text-purple-400">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+                    <path d="m9 12 2 2 4-4"/>
+                </svg>
+            </div>
+            </div>
+    <!-- Home Button -->
+    <div class="mt-8 text-center">
+        <a href="index.html" class="inline-block px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-full font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">
+            Back to Home
+        </a>
+    </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-900/50 border-t border-purple-900/50 py-12 mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center mb-4 md:mb-0">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-6 h-6 text-purple-400 mr-2"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                <span class="text-gray-400">© 2025 DailyBrain. All rights reserved.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="privacy.html" class="text-gray-400 hover:text-purple-400 transition-colors">Privacy</a>
+                <a href="contact.html" class="text-gray-400 hover:text-purple-400 transition-colors">Contact</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIconContainer = document.getElementById('mobileMenuIcon');
+    const menuIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-menu w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
+    const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuIconContainer.innerHTML = mobileMenu.classList.contains('hidden') ? menuIcon : xIcon;
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const dailyFacts = {
+            "2025-08-27": [
+                {
+                    title: "The Human Brain",
+                    content: "The human brain contains approximately 86 billion neurons. Each neuron forms connections with other neurons, creating trillions of connections called synapses. The brain can generate about 23 watts of power when awake - enough to power a light bulb!",
+                    category: "Science",
+                    expanded: false
+                },
+                {
+                    title: "Honey Never Spoils",
+                    content: "Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible. Honey's natural composition of low water content, high acidity, and the presence of hydrogen peroxide makes it extremely resistant to bacteria and microorganisms.",
+                    category: "Nature",
+                    expanded: false
+                },
+                {
+                    title: "The Shortest War",
+                    content: "The Anglo-Zanzibar War of 1896 is the shortest recorded war in history, lasting only 38 minutes. It was fought between the United Kingdom and the Zanzibar Sultanate after Sultan Khalid bin Barghash took power without British approval.",
+                    category: "History",
+                    expanded: false
+                }
+            ],
+            "2025-08-28": [
+                {
+                    title: "Octopuses Have Three Hearts",
+                    content: "Octopuses have three hearts: two pump blood to the gills, while the third pumps it to the rest of the body. Their blood is blue because it's copper-based rather than iron-based like human blood. When an octopus swims, the heart that delivers blood to its body stops beating, which is why they prefer to crawl rather than swim.",
+                    category: "Animals",
+                    expanded: false
+                },
+                {
+                    title: "The Eiffel Tower Grows",
+                    content: "The Eiffel Tower can be 15 cm taller during the summer due to the expansion of the iron on hot days. The iron structure expands when heated and contracts when cooled, causing the tower to grow and shrink by up to 6 inches (15 cm) depending on the temperature.",
+                    category: "Engineering",
+                    expanded: false
+                },
+                {
+                    title: "Cleopatra Lived Closer to the Moon Landing",
+                    content: "Cleopatra VII, the last active ruler of the Ptolemaic Kingdom of Egypt, lived closer in time to the invention of the iPhone (2007) than to the construction of the Great Pyramid of Giza (around 2560 BC). She lived from 69 BC to 30 BC, while the Great Pyramid was built over 2,500 years before her birth.",
+                    category: "History",
+                    expanded: false
+                }
+            ],
+            "2025-08-29": [
+                {
+                    title: "Bananas Are Berries",
+                    content: "Botanically speaking, bananas are classified as berries. The term 'berry' comes from botanical classification where a berry is a fleshy fruit produced from a single ovary. Meanwhile, fruits like strawberries and raspberries are not true berries in the botanical sense.",
+                    category: "Science",
+                    expanded: false
+                },
+                {
+                    title: "The Great Wall Myth",
+                    content: "Contrary to popular belief, the Great Wall of China cannot be seen from space with the naked eye. It's only visible from low Earth orbit (about 160 km up) with aid, and only under perfect conditions. Many other man-made structures are more visible from space.",
+                    category: "Myths",
+                    expanded: false
+                },
+                {
+                    title: "Jupiter's Giant Storm",
+                    content: "Jupiter's Great Red Spot is a giant storm that has been raging for at least 400 years. This massive storm is so large that three Earths could fit inside it. The storm appears to be shrinking, but it still has winds of up to 432 km/h (268 mph).",
+                    category: "Space",
+                    expanded: false
+                }
+            ],
+            "2025-08-30": [
+                {
+                    title: "The Oldest Living Thing",
+                    content: "The oldest known living organism is a bristlecone pine tree named 'Methuselah' located in California's White Mountains. As of 2023, it is approximately 4,855 years old. Its exact location is kept secret to protect it from vandalism.",
+                    category: "Nature",
+                    expanded: false
+                },
+                {
+                    title: "Venus Has the Longest Day",
+                    content: "A day on Venus (one full rotation) takes longer than a year on Venus. It takes Venus about 243 Earth days to rotate once on its axis, but only about 225 Earth days to orbit the Sun. This means that on Venus, a day is longer than a year!",
+                    category: "Space",
+                    expanded: false
+                },
+                {
+                    title: "The Titanic Had a Near-Miss",
+                    content: "The Titanic nearly collided with another ship, the SS New York, as it was leaving Southampton at the start of its maiden voyage. The suction from the Titanic's massive size caused the New York's mooring ropes to snap, and it drifted dangerously close to the Titanic. Quick action by a tugboat and the Titanic's crew prevented a disaster before the ship even left the harbor.",
+                    category: "History",
+                    expanded: false
+                }
+            ],
+            "2025-08-31": [
+                {
+                    title: "Your Stomach Lining Regenerates",
+                    content: "The lining of your stomach is regenerated every few days to prevent it from digesting itself. The stomach produces hydrochloric acid strong enough to dissolve metal, but it also produces a thick mucus layer and regenerates its lining rapidly to protect itself.",
+                    category: "Human Body",
+                    expanded: false
+                },
+                {
+                    title: "The Deepest Point on Earth",
+                    content: "The Mariana Trench in the Pacific Ocean is the deepest part of the world's oceans. At its deepest point, called Challenger Deep, it reaches approximately 10,984 meters (36,037 feet) deep. If you placed Mount Everest into the Mariana Trench, its peak would still be over 2,000 meters (6,562 feet) below sea level.",
+                    category: "Geography",
+                    expanded: false
+                },
+                {
+                    title: "The First Computer Programmer",
+                    content: "Ada Lovelace, an English mathematician, is considered the world's first computer programmer. In the mid-1800s, she wrote the first algorithm intended to be processed by a machine - Charles Babbage's Analytical Engine. Her notes included what is recognized as the first algorithm meant to be carried out by a machine, making her the first computer programmer.",
+                    category: "Technology",
+                    expanded: false
+                }
+            ]
+        };
+
+        const factsContainer = document.getElementById('facts-container');
+        const completedSection = document.getElementById('completed-section');
+        const completedMessage = document.getElementById('completed-message');
+
+        function getTodayDateString() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        const todayDateString = getTodayDateString();
+        const todayFacts = dailyFacts[todayDateString] || [];
+        const hasViewedToday = localStorage.getItem(`dailyFacts_${todayDateString}`) !== null;
+
+        if (todayFacts.length === 0) {
+            showCompletedMessage("No facts available for today. Please check back later!");
+            return;
+        }
+
+        todayFacts.forEach((fact, index) => {
+            const factCard = document.createElement('div');
+            factCard.className = 'fact-card bg-gray-800/50 border border-purple-900/50 rounded-xl p-6 cursor-pointer';
+            factCard.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-2 h-8 rounded-full bg-purple-500"></div>
+                        <h3 class="text-xl font-semibold text-white">${fact.title}</h3>
+                    </div>
+                    <span class="text-purple-400 text-sm font-medium px-3 py-1 bg-purple-900/50 rounded-full">${fact.category}</span>
+                </div>
+                <div class="fact-content mt-4 text-gray-300">
+                    <p>${fact.content}</p>
+                </div>
+                <button class="expand-btn mt-4 text-purple-400 hover:text-purple-300 font-medium flex items-center">
+                    ${fact.expanded ? 'Show Less' : 'Read More'}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down ml-1 transition-transform ${fact.expanded ? 'rotate-180' : ''}">
+                        <path d="m6 9 6 6 6-6"/>
+                    </svg>
+                </button>
+            `;
+
+            factCard.querySelector('.expand-btn').addEventListener('click', () => {
+                fact.expanded = !fact.expanded;
+                const content = factCard.querySelector('.fact-content');
+                const chevron = factCard.querySelector('.lucide-chevron-down');
+                const button = factCard.querySelector('.expand-btn');
+
+                if (fact.expanded) {
+                    content.classList.add('fact-expanded');
+                    chevron.classList.add('rotate-180');
+                    button.innerHTML = `
+                        Show Less
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down ml-1 transition-transform rotate-180">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    `;
+                } else {
+                    content.classList.remove('fact-expanded');
+                    chevron.classList.remove('rotate-180');
+                    button.innerHTML = `
+                        Read More
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down ml-1 transition-transform">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                    `;
+                }
+            });
+
+            factsContainer.appendChild(factCard);
+        });
+
+        localStorage.setItem(`dailyFacts_${todayDateString}`, 'viewed');
+
+        function showCompletedMessage(message) {
+            completedMessage.textContent = message;
+            completedSection.classList.remove('hidden');
+            factsContainer.classList.add('hidden');
+        }
+    });
+</script>
+
+</body>
+</html>

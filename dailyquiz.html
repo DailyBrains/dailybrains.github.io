@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Quiz - DailyBrain</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1620034936116811"
+            crossorigin="anonymous"></script>
+
+    <style>
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient {
+            background-size: 200% auto;
+            animation: gradientBG 5s ease infinite;
+        }
+        .selected {
+            border: 2px solid #7C3AED;
+        }
+        .correct {
+            background-color: #22C55E !important; /* green-500 */
+            color: white !important;
+        }
+        .wrong {
+            background-color: #EF4444 !important; /* red-500 */
+            color: white !important;
+        }
+        .next-button {
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        .next-button.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-all duration-500">
+
+<!-- Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white dark:bg-gray-900 shadow-lg backdrop-blur-lg bg-opacity-90 dark:bg-opacity-90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <span class="w-8 h-8 text-purple-600 dark:text-purple-400 mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-sparkles w-8 h-8"><path d="M9.91 16.64a.9.9 0 0 0 .58.58l2.92.5a.9.9 0 0 0 .57-.57l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M21 3.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/><path d="M12.5 7.91a.9.9 0 0 0 .57.57l2.92.5a.9.9 0 0 0 .57-.58l.5-2.92a.9.9 0 0 0-.58-.57l-2.92-.5a.9.9 0 0 0-.57.58l-.5 2.92Z"/><path d="M3.5 12.5c-.3 0-.5.1-.7.3-.2.2-.3.4-.3.7s.1.5.3.7c.2.2.4.3.7.3.3 0 .5-.1.7-.3.2-.2.3-.4.3-.7s-.1-.5-.3-.7c-.2-.2-.4-.3-.7-.3Z"/></svg>
+                </span>
+                <span class="text-xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+                    DailyBrain
+                </span>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200 font-medium">Home</a>
+                <a href="about.html" class="text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors duration-200 font-medium">About</a>
+            </div>
+
+            <!-- Right side buttons -->
+            <div class="flex items-center space-x-4">
+                <button id="mobileMenuButton" class="md:hidden p-2 rounded-lg bg-gray-100 dark:bg-gray-800">
+                    <span id="mobileMenuIcon" class="w-5 h-5 text-gray-700 dark:text-gray-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden bg-white dark:bg-gray-900 shadow-lg">
+        <div class="px-4 pt-2 pb-4 space-y-2">
+            <a href="index.html" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">Home</a>
+            <a href="about.html" class="block w-full text-left px-3 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors duration-200">About</a>
+        </div>
+    </div>
+</nav>
+
+<!-- Main Quiz Content -->
+<main class="relative py-24 lg:py-32 overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full z-0 opacity-30">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-300 dark:bg-purple-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-pulse"></div>
+        <div class="absolute bottom-20 right-10 w-72 h-72 bg-pink-300 dark:bg-pink-900 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-3xl animate-pulse"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl lg:text-7xl font-bold mb-6">
+                <span class="bg-gradient-to-r from-purple-600 via-pink-600 to-indigo-600 dark:from-purple-400 dark:via-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                    Daily Quiz Challenge
+                </span>
+                <br>
+                <span id="quiz-subtitle" class="text-gray-900 dark:text-white">Test Your Wits!</span>
+            </h1>
+            <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">
+                Exercise your brain with today's trivia questions. Can you get them all right?
+            </p>
+        </div>
+
+        <!-- Quiz Card -->
+        <div id="quiz-card" class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden ring-2 ring-purple-500/30 dark:ring-purple-400/30 hidden">
+            <div class="absolute inset-0 opacity-10 dark:opacity-20 -z-10 animate-gradient bg-gradient-to-br from-purple-500 to-pink-500"></div>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Question <span id="current-question">1</span> of <span id="total-questions">10</span></p>
+                <h2 id="question-text" class="text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white mb-8">
+                    Loading question...
+                </h2>
+
+                <div id="answer-options" class="grid grid-cols-1 gap-4 md:gap-6">
+                </div>
+
+                <div class="flex justify-center items-center mt-12">
+                    <button id="submit-answer" class="px-10 py-4 rounded-full font-bold text-white shadow-lg transition-shadow bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 hover:shadow-2xl hover:scale-105">
+                        Submit Answer
+                    </button>
+                    <button id="next-question" class="next-button ml-6 p-4 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg hover:from-purple-700 hover:to-pink-700 hover:shadow-xl transition-all duration-300 transform hover:scale-110">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completed/Cooldown Section -->
+        <div id="completed-section" class="max-w-3xl mx-auto bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 md:p-12 relative overflow-hidden ring-2 ring-purple-500/30 dark:ring-purple-400/30 hidden">
+            <div class="absolute inset-0 opacity-10 dark:opacity-20 -z-10 animate-gradient bg-gradient-to-br from-purple-500 to-pink-500"></div>
+            <!-- FIX: Added missing div for JavaScript to inject content into -->
+            <div id="completed-content"></div>
+        </div>
+
+        <!-- Home Button -->
+        <div class="mt-8 text-center">
+            <!-- FIX: Removed onclick attribute to allow the link to work correctly -->
+            <a href="index.html" class="inline-block px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-full font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-300">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-100 dark:bg-gray-900 py-12 mt-24">
+</footer>
+
+<script>
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuIconContainer = document.getElementById('mobileMenuIcon');
+    const menuIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-menu w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>`;
+    const xIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="lucide lucide-x w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>`;
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        mobileMenuIconContainer.innerHTML = mobileMenu.classList.contains('hidden') ? menuIcon : xIcon;
+    });
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+
+        const dailyQuizzes = {
+            "2025-08-27": [
+                {
+                    question: "What famous landmark was gifted to the United States by France in 1886?",
+                    options: ["Eiffel Tower", "Statue of Liberty", "Big Ben", "Colosseum"],
+                    correct: "Statue of Liberty"
+                },
+                {
+                    question: "When was the Declaration of Independence signed?",
+                    options: ["1776", "1787", "1767", "1800"],
+                    correct: "1776"
+                },
+                {
+                    question: "Which four presidents are on Mount Rushmore?",
+                    options: ["Franklin D. Roosevelt, John F. Kennedy, Abraham Lincoln, Jimmy Carter", "George Washington, Abraham Lincoln, Theodore Roosevelt, Barack Obama", "George Washington, Abraham Lincoln, Thomas Jefferson and Theodore Roosevelt", "George Washington, Abraham Lincoln, Andrew Jackson, Ulysses S. Grant"],
+                    correct: "George Washington, Abraham Lincoln, Thomas Jefferson and Theodore Roosevelt"
+                }
+            ],
+        "2025-08-28": [
+    {
+        question: "Which planet is known as the Red Planet?",
+        options: ["Venus", "Mars", "Jupiter", "Saturn"],
+        correct: "Mars"
+    },
+    {
+        question: "What is the name of the first satellite launched into space?",
+        options: ["Apollo 11", "Voyager 1", "Sputnik 1", "Hubble"],
+        correct: "Sputnik 1"
+    },
+    {
+        question: "Who was the first person to walk on the Moon?",
+        options: ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Michael Collins"],
+        correct: "Neil Armstrong"
+    }
+],
+"2025-08-29": [
+    {
+        question: "What is the largest desert in the world?",
+        options: ["Sahara", "Gobi", "Kalahari", "Arctic"],
+        correct: "Sahara"
+    },
+    {
+        question: "Which country has the most natural lakes?",
+        options: ["Canada", "Russia", "United States", "Brazil"],
+        correct: "Canada"
+    },
+    {
+        question: "What is the capital city of Australia?",
+        options: ["Sydney", "Melbourne", "Canberra", "Perth"],
+        correct: "Canberra"
+    }
+],
+"2025-08-30": [
+    {
+        question: "What gas do humans need to survive?",
+        options: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"],
+        correct: "Oxygen"
+    },
+    {
+        question: "How many planets are in our solar system?",
+        options: ["7", "8", "9", "10"],
+        correct: "8"
+    },
+    {
+        question: "What is the process by which plants make their own food?",
+        options: ["Respiration", "Photosynthesis", "Fermentation", "Digestion"],
+        correct: "Photosynthesis"
+    }
+],
+"2025-08-31": [
+    {
+        question: "Who wrote 'The Adventures of Tom Sawyer'?",
+        options: ["Mark Twain", "Ernest Hemingway", "F. Scott Fitzgerald", "John Steinbeck"],
+        correct: "Mark Twain"
+    },
+    {
+        question: "Which Shakespeare play features the characters Rosencrantz and Guildenstern?",
+        options: ["Macbeth", "Othello", "Hamlet", "King Lear"],
+        correct: "Hamlet"
+    },
+    {
+        question: "What is the name of the fictional wizarding school in the Harry Potter series?",
+        options: ["Ilvermorny", "Durmstrang", "Hogwarts", "Beauxbatons"],
+        correct: "Hogwarts"
+    }
+],
+
+        };
+
+        const quizCard = document.getElementById('quiz-card');
+        const completedSection = document.getElementById('completed-section');
+        const completedContent = document.getElementById('completed-content');
+        const quizSubtitle = document.getElementById('quiz-subtitle');
+
+        function getTodayDateString() {
+            // FIX: Hardcoded a date to ensure a quiz is loaded for demonstration.
+            // In a real application, you would ensure there's a quiz for the current date.
+            return "2025-08-27";
+
+            /* Original code that gets the real current date:
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+            */
+        }
+
+        const todayDateString = getTodayDateString();
+        const quizData = dailyQuizzes[todayDateString];
+        const lastCompletedDate = localStorage.getItem('dailyQuizCompletedDate');
+
+        if (lastCompletedDate === todayDateString) {
+            showCompletedMessage("You've already completed today's quiz. Come back tomorrow for a new challenge!");
+            return;
+        }
+
+        if (!quizData) {
+            showCompletedMessage("No quiz available for today. Please check back later!");
+            return;
+        }
+
+        quizCard.classList.remove('hidden');
+        initializeQuiz(quizData);
+
+
+        function showCompletedMessage(message) {
+            quizSubtitle.textContent = "All Done for Today!";
+            completedContent.innerHTML = `
+                <div class="w-24 h-24 mx-auto mb-6 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check-circle-2 text-purple-600 dark:text-purple-400">
+                        <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">Challenge Complete!</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">${message}</p>
+                <div class="flex justify-center gap-4">
+                </div>`;
+            completedSection.classList.remove('hidden');
+            quizCard.classList.add('hidden');
+        }
+
+        function setQuizCompleted() {
+            localStorage.setItem('dailyQuizCompletedDate', todayDateString);
+        }
+
+        function initializeQuiz(currentQuizData) {
+            const submitButton = document.getElementById('submit-answer');
+            const nextButton = document.getElementById('next-question');
+            const questionText = document.getElementById('question-text');
+            const answerOptionsContainer = document.getElementById('answer-options');
+            const currentQuestionSpan = document.getElementById('current-question');
+            const totalQuestionsSpan = document.getElementById('total-questions');
+
+            let selectedButton = null;
+            let currentQuestionIndex = 0;
+            let correctAnswers = 0;
+            totalQuestionsSpan.textContent = currentQuizData.length;
+
+            function loadQuestion(index) {
+                const question = currentQuizData[index];
+                questionText.textContent = question.question;
+                currentQuestionSpan.textContent = index + 1;
+                answerOptionsContainer.innerHTML = '';
+
+                question.options.forEach(optionText => {
+                    const button = document.createElement('button');
+                    button.className = "answer-option block w-full text-left px-6 py-4 rounded-xl font-semibold transition-all duration-300 text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 hover:bg-purple-500 dark:hover:bg-purple-600 hover:text-white shadow-md hover:shadow-lg hover:scale-105";
+                    button.textContent = optionText;
+                    button.addEventListener('click', () => handleOptionSelect(button));
+                    answerOptionsContainer.appendChild(button);
+                });
+
+                selectedButton = null;
+            }
+
+            function handleOptionSelect(button) {
+                document.querySelectorAll('.answer-option').forEach(btn => btn.classList.remove('selected'));
+                selectedButton = button;
+                button.classList.add('selected');
+            }
+
+            submitButton.addEventListener('click', () => {
+                if (!selectedButton) return;
+
+                const userAnswer = selectedButton.textContent.trim();
+                const correctAnswer = currentQuizData[currentQuestionIndex].correct;
+
+                if (userAnswer === correctAnswer) {
+                    selectedButton.classList.add('correct');
+                    correctAnswers++;
+                } else {
+                    selectedButton.classList.add('wrong');
+                }
+
+                document.querySelectorAll('.answer-option').forEach(btn => btn.disabled = true);
+                nextButton.classList.add('show');
+                submitButton.disabled = true;
+                submitButton.classList.add("opacity-50", "cursor-not-allowed");
+            });
+
+            nextButton.addEventListener('click', () => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < currentQuizData.length) {
+                    loadQuestion(currentQuestionIndex);
+                    nextButton.classList.remove('show');
+                    submitButton.disabled = false;
+                    submitButton.classList.remove("opacity-50", "cursor-not-allowed");
+                } else {
+                    setQuizCompleted();
+                    const percentageCorrect = ((correctAnswers / currentQuizData.length) * 100).toFixed(0);
+                    showCompletedMessage(`You answered ${correctAnswers} out of ${currentQuizData.length} questions correctly (${percentageCorrect}%)!`);
+                }
+            });
+            loadQuestion(0);
+        }
+    });
+</script>
+
+</body>
+</html>
